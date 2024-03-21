@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -18,9 +19,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'name', 'email', 'password', 'email_verified_at', 'remember_token', 'phone', 'role', 'allowed', 'image', 'setting'
     ];
 
     /**
@@ -42,4 +41,16 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public static function checkUser ($request) {
+        $user = self::where('phone', $request->phone)->first();
+        if (!$user) {
+            return false;
+        }
+        if (!Hash::check($request->password, $user->makeVisible(['password'])->password)) {
+            return false;
+        }
+        $user->makeHidden(['password']);
+        return $user;
+    }
 }
