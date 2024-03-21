@@ -12,11 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('phone', 12)->after('remember_token');
+            $table->string('phone', 12)->unique()->after('remember_token');
             $table->string('role', 20)->default('admin')->after('phone');
             $table->text('allowed')->nullable()->after('role');
             $table->text('image')->nullable()->after('allowed');
-            $table->text('setting')->nullable()->after('image');
         });
     }
 
@@ -30,7 +29,6 @@ return new class extends Migration
             $table->dropColumn('role');
             $table->dropColumn('allowed');
             $table->dropColumn('image');
-            $table->dropColumn('setting');
         });
     }
 };

@@ -1,5 +1,3 @@
-import jp from '@/lang/jp.json'
-
 export default {
     getSetCookieToken: (state) => {
         //get cookie sso token
@@ -44,10 +42,6 @@ export default {
         sessionStorage.removeItem('TOKEN')
         sessionStorage.removeItem('USER')
     },
-    setFactor: (state, factor) => {
-        state.user.factor = factor
-        sessionStorage.setItem('FACTOR', factor)
-    },
     setUser: (state, user) => {
         sessionStorage.setItem('USER', JSON.stringify(user))
         state.user.data = sessionStorage.getItem('USER')
@@ -55,31 +49,6 @@ export default {
     setToken: (state, token) => {
         state.user.token = token
         sessionStorage.setItem('TOKEN', token)
-    },
-    initTransit: (state) => {
-        state.transit = {
-            status: false,
-            class: '',
-            type: 0,
-            reloadParent: false
-        }
-    },
-    setIsOpenTransitDetail: (state, data = {status: false, type: 1}) => {
-        state.transit.type = data.type ?? 1
-        if (data.status) {
-            state.transit.status = data.status ?? false
-            setTimeout(() => {
-                state.transit.class = 'show'
-            }, 100)
-        } else {
-            state.transit.class = ''
-            setTimeout(() => {
-                state.transit.status = data.status ?? false
-            }, 300)
-        }
-    },
-    setTransitReloadParent: (state, boolean) => {
-        state.transit.reloadParent = boolean
     },
     setLoading: (state, value) => {
         state.loading = value
@@ -93,20 +62,8 @@ export default {
         }
     },
     showErrorModal: (state, value) => {
-        state.errorModal.title = jp.error_title
+        state.errorModal.title = 'Error'
         state.errorModal.message = value
         state.errorModal.active = true
     },
-    downloadByURL: (state, value) => {
-        const link = document.createElement('a')
-        link.href = value
-        link.click()
-        link.remove()
-    },
-    setDeleteButton: (state, value) => {
-        state.isDeleteButton = value
-    },
-    setFromFeature: (state, value) => {
-        state.fromFeature = value
-    }
 }

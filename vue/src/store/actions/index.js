@@ -10,17 +10,6 @@ export default {
     return axiosClient.post("/login", user).then(({ data }) => {
       commit("setUser", data.user);
       commit("setToken", data.token);
-      commit("setFactor", data.factor);
-      if (data.sso_domain) {
-        commit("setCookie", data);
-      }
-      return data;
-    });
-  },
-  factor({ commit }, user) {
-    return axiosClient.post(`/factor`, user).then(({ data }) => {
-        sessionStorage.removeItem("FACTOR");
-      return data;
     });
   },
   logout({ commit }) {
