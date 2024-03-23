@@ -1,8 +1,8 @@
 <template>
     <div class="header" id="myHeader">
-        <span class="mbmenu"><i class="fa fa-bars"></i></span><a href="./homepage" class="home"><i class="fa fa-home"></i></a>
+        <span class="mbmenu"><i class="fa fa-bars"></i></span><a href="/" class="home"><i class="fa fa-home"></i></a>
         <ul class="menu">
-            <li><a href="./homepage"><i class="fa fa-home mnh"></i> Home</a></li>
+            <li><a href="/"><i class="fa fa-home mnh"></i> Home</a></li>
             <li><a href="./vandon">Vận đơn <i class="fa fa-caret-down"></i></a>
                 <ul>
                     <li><a href="./lenh">Lệnh điều động</a></li>
@@ -58,16 +58,73 @@
             <div class="toogle_class"><i class="arrow-up"></i><i class="arrow-up2"></i><span>V</span>
                 <p class="bold">Vtm</p>
                 <p class="p">Kỹ thuật</p>
-                <h3 class="h3op"><i class="fa fa-cog"></i> Chọn giao diện làm việc</h3>
-                <div class="setch">
-                    <ul>
-                        <li><a href="javascript:void(0)" id="mn_horizontal" onclick="return active2('homepage','menu',0,0,1)"><input type="radio" name="radio" value="0" id="radio0" checked><label for="radio0">Giao diện menu ngang</label></a></li>
-                        <li><a href="javascript:void(0)" id="mn_horizontal" onclick="return active2('homepage','menu',1,0,1)"><input type="radio" name="radio" value="1" id="radio0"><label for="radio0">Giao diện menu dọc</label></a></li>
-                    </ul>
-                </div>
-                <p class="p2"><a href="javascript:void(0)" title="Thoát" onClick="return checkLogout()">Đăng xuất</a><a href="javascript:void(0)" onClick="return frmChangePass()" title="Đổi mật khẩu?" style="float:right;border:0;background:none;color:#0084fc;text-decoration:underline">Đổi mật khẩu?</a></p>
+                <template v-if="!isMobile">
+                    <h3 class="h3op"><i class="fa fa-cog"></i> Chọn giao diện làm việc</h3>
+                    <div class="setch">
+                        <ul>
+                            <li><a href="javascript:void(0)" id="mn_horizontal"><input id="radio0" type="radio" v-model="menu" :value="0" @change="changeMenuType"><label for="radio0">Giao diện menu ngang</label></a></li>
+                            <li><a href="javascript:void(0)" id="mn_horizontal"><input id="radio1" type="radio" v-model="menu" :value="1" @change="changeMenuType"><label for="radio1">Giao diện menu dọc</label></a></li>
+                        </ul>
+                    </div>
+                </template>
+                <p class="p2">
+                    <a href="javascript:void(0)" title="Thoát" @click="logout">Đăng xuất</a>
+                    <a href="javascript:void(0)" title="Đổi mật khẩu?" style="float:right;border:0;background:none;color:#0084fc;text-decoration:underline">Đổi mật khẩu?</a>
+                </p>
             </div>
         </div>
     </div>
     <div class="transmenu"></div>
+    <loading v-if="loading"></loading>
 </template>
+
+<style scoped>
+
+</style>
+<script setup>
+import Loading from "../../Loading.vue";
+</script>
+<script>
+export default {
+    emits: ['refreshPage'],
+    data: function () {
+        return {
+            loading: false,
+            menu: 0,
+            isMobile: false
+        }
+    },
+    mounted: function () {
+        this.checkMobile();
+    },
+    methods: {
+        changeMenuType: function () {
+            this.loading = true;
+            let data = {
+                menu: this.menu
+            };
+            this.$store.dispatch("changeMenuType", data).then((res) => {
+                localStorage.setItem('setting', res.data.data.setting);
+                this.loading = false;
+                this.$router.go();
+            });
+        },
+        logout: function () {
+            this.loading = true;
+            this.$store.dispatch("logout").then(() => {
+                this.loading = false;
+                this.$router.push({
+                    name: "Login",
+                });
+            });
+        },
+        checkMobile: function () {
+            if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                this.isMobile = true;
+            } else {
+                this.isMobile = false
+            }
+        }
+    }
+}
+</script>

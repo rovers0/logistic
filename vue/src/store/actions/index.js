@@ -31,4 +31,9 @@ export default {
       return false
   });
   },
+  changeMenuType({ commit }, data) {
+    return axiosClient.post("/changeMenuType", data).then((response) => {
+      return response;
+    });
+  },
 };
