@@ -1,7 +1,7 @@
 <template>
     <div class="banner">
-        <a href="./homepage" class="logo"><img src="logo.png"></a>
-        <h1><a href="homepage" style="color:#fff">Phần mềm <span style="color:yellow">LogisViet</span></a><span class="slog">Hệ thống điều hành vận tải - Logistics</span></h1>
+        <a href="/" class="logo"><img src="logo.png"></a>
+        <h1><a href="/" style="color:#fff">Phần mềm <span style="color:yellow">LogisViet</span></a><span class="slog">Hệ thống điều hành vận tải - Logistics</span></h1>
         <ul class="topplugin">
             <li><a href="./suco" title="Thông báo sự cố"><i class="fa fa-exclamation-triangle"></i> Sự cố <span class="red bold">(0)</span></a></li>
             <li><a href="./test-gps" title="Track map"><i class="fa fa-map-marker"></i> Track map</a></li>

@@ -67,7 +67,6 @@ const router = createRouter({
   routes,
 });
 router.beforeEach((to, from, next) => {
-  store.commit('initTransit');
   //store.commit("getSetCookieToken");
   if (to.meta.requiresAuth && !sessionStorage.getItem("TOKEN")) {
     next({ name: "Login" });
@@ -79,6 +78,7 @@ router.beforeEach((to, from, next) => {
         },
       })
       .then((res) => {
+        localStorage.setItem('setting', res.data.data.setting);
         next({
           name: "Dashboard",
         });
