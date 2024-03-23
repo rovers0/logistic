@@ -1,5 +1,5 @@
 <template>
-    <div class="page" id="page">
+    <div id="page">
         <div class="hright">
             <div class="hb1">
                 <ul class="hb">
@@ -586,7 +586,7 @@ export default {
         loadScript: function () {
             let files = [
                 'js/chart.min.js',
-                'js/home.js',
+                // 'js/home.js',
             ];
 
             files.forEach((file, i) => {

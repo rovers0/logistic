@@ -31,13 +31,7 @@ export default {
     },
     logout: (state) => {
         state.user.token = null
-        state.user.factor = null
         state.user.data = {}
-
-        //clear cookie
-        var cookieName = localStorage.getItem('COOKIE_NAME')
-        var cookieDomain = localStorage.getItem('COOKIE_DOMAIN')
-        document.cookie = cookieName + '=' + ';path=/;domain=' + cookieDomain + ';Expires=Thu, 01 Jan 1970 00:00:01 GMT'
 
         sessionStorage.removeItem('TOKEN')
         sessionStorage.removeItem('USER')

@@ -53,4 +53,9 @@ class User extends Authenticatable
         $user->makeHidden(['password']);
         return $user;
     }
+
+    public function setting()
+    {
+        return $this->belongsTo(Setting::class, 'id', 'user_id');
+    }
 }
