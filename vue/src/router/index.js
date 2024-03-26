@@ -13,6 +13,8 @@ import Login from "@/views/auth/Login.vue";
 //Top page
 import Dashboard from "@/views/toppage/Dashboard.vue";
 import Vehicle from "@/views/vehicle/index.vue";
+import Romooc from "@/views/vehicle/romooc.vue";
+import Driver from "@/views/vehicle/driver.vue";
 
 const routes = [
   {
@@ -56,9 +58,19 @@ const routes = [
     },
     children: [
       {
-        path: "/vehicle", 
+        path: "/vehicle",
         name: "Vehicle",
         component: Vehicle,
+      },
+      {
+        path: "/vehicle/mooc",
+        name: "mooc",
+        component: Romooc,
+      },
+      {
+        path: "/vehicle/driver",
+        name: "Driver",
+        component: Driver,
       },
     ]
   },
