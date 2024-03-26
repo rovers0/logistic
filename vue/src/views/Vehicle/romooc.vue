@@ -1,19 +1,19 @@
 <template>
     <div class="page">
         <div class="title">
-            <h2>Danh sách xe</h2>
+            <h2>Danh sách Rơ Mooc</h2>
         </div>
-        <p class="msg"> Danh sách xe đang hoạt động tính đến ngày: <b class="red">25-03-2024</b> - Hiện có: <span class="red bold">
+        <p class="msg">Danh sách số Sơ mi rơ mooc: <b class="red">26-03-2024</b> - Hiện có: <span class="red bold">
                 <u>4</u>
-            </span> xe </p>
+            </span> cái </p>
         <div class="tools">
-            <form name="frmSXe" id="frmSXe" action="./xe/" method="get" enctype="multipart/form-data">
-                <a href="javascript:void(0)" title="Đã đủ số lượng xe đăng ký" style="opacity:0.3">
-                    <i class="fa fa-plus"></i> Thêm xe </a>
-                <a href="javascript:void(0)" title="Đã đủ số lượng xe đăng ký" style="opacity:0.3">
+            <form action="./xe/mooc/" methof="get" enctype="multipart/form-data">
+                <a href="javascript:void(0)" onclick="return frmForm('xe','mooc_frm',1)" title="Thêm mới" class="add">
+                    <i class="fa fa-plus"></i> Thêm mới </a>
+                <a href="javascript:void(0)" onclick="return frmForm('xe','frm_mooc_excel',1)" title="Nhập từ file Excel" class="add">
                     <i class="fa fa-file-excel-o"></i> Nhập file Excel </a>
-                <input type="text" onclick="return listXeSearch()" id="biensoxe" style="width:90px" placeholder="Biển số xe" maxlength="15" autocomplete="off" readonly>
-                <input type="hidden" name="idxe" id="id_xe">
+                <input type="text" name="soromooc" id="soromooc" onclick="return loadListMooc()" style="width:90px" placeholder="Số rơ mooc" maxlength="30" autocomplete="off" readonly="">
+                <input type="hidden" name="romooc_id" id="romooc_id">
                 <select name="baixe">
                     <option value="">Bãi xe</option>
                     <option value="0">Chưa có bãi</option>
@@ -21,185 +21,188 @@
                     <option value="2">Bãi xe 2</option>
                     <option value="3">Bãi xe 3</option>
                 </select>
-                <select name="socau">
-                    <option value="">Loại xe</option>
-                    <option value="1">Xe 1 cầu</option>
-                    <option value="2">Xe 2 cầu</option>
-                    <option value="0">Chưa xác định</option>
-                </select>
                 <button type="submit">
                     <i class="fa fa-search"></i> Tra cứu </button>
-                <a href="./xe/" title="Làm mới">
+                <a href="./xe/mooc/" title="Làm mới">
                     <i class="fa fa-refresh"></i> Refresh </a>
             </form>
         </div>
-        <div class="table table_scroll">
-            <form name="frmTxList" id="frmTxList" method="post" enctype="multipart/form-data">
-                <table class="table1366 table_head10" style="font-size:10px">
+        <div class="table table_head10 table_scroll">
+            <table class="table1366" style="font-size:10px">
+                <tbody>
                     <tr>
                         <th width="1%">STT</th>
-                        <th width="1%">ID</th>
-                        <th width="5%">Biển số xe</th>
-                        <th width="5%">Số cầu</th>
-                        <th width="5%">Rơ mooc</th>
-                        <th width="9%">Tài xế phụ trách</th>
-                        <th width="9%">Cổ đông xe</th>
-                        <th width="11%">Hạn đăng kiểm</th>
-                        <th width="11%">Hạn bảo trì đường bộ</th>
-                        <th width="11%">Hạn BH tự nguyện</th>
-                        <th width="11%">Hạn BH bắt buộc</th>
-                        <th width="11%">Giấy phép đi đường</th>
-                        <th width="6%">Bãi xe</th>
+                        <th>Số sơ mi rơ mooc</th>
+                        <th width="1%">Tải trọng (KG)</th>
+                        <th width="1%">Kích cỡ</th>
+                        <th>Loại mooc</th>
+                        <th>Số trục</th>
+                        <th>Số xe</th>
+                        <th width="13%">Hạn đăng kiểm</th>
+                        <th width="13%">Hạn bảo trì đường bộ</th>
+                        <th width="13%">Hạn BH tự nguyện</th>
+                        <th width="13%">Hạn BH bắt buộc</th>
+                        <th width="13%">Giấy phép đi đường</th>
+                        <th width="5%">Bãi xe</th>
+                        <th width="1%">#</th>
                         <th width="4%">Actions</th>
                     </tr>
                     <tr>
                         <td align="center">1</td>
-                        <td align="center">4</td>
                         <td>
-                            <a href="javascript:void(0)" @click="openVehicleDetail('NF9fX19fMTVIMDI5ODU')" class="bold">15H02985</a>
+                            <a href="javascript:void(0)" @click="openVehicleDetail('NF9fX19fMTVSMTI3MzY')" title="Xem đầy đủ">15R12736</a>
                         </td>
-                        <td>Xe 2 cầu</td>
+                        <td>3305000</td>
+                        <td>40'</td>
+                        <td>Mooc sương</td>
+                        <td>3 trục</td>
                         <td></td>
-                        <td>Lại Ngọc Hoằng</td>
-                        <td></td>
-                        <td>
-                            <span class="red">Còn -109 (ngày)</span>
-                            <a href="javascript:void(0)" style="float:right" @click="openDetailModal('isOpenVehicleInspectionModal')" title="Xem">
+                        <td>Chưa có <a href="javascript:void(0)" style="float:right" @click="openDetailModal('isOpenVehicleInspectionModal')" title="Xem">
                                 <i class="fa fa-eye"></i> Xem </a>
                         </td>
-                        <td> Chưa có <a href="javascript:void(0)" style="float:right" @click="openDetailModal('isOpenRoadMaintenanceModal')" title="Xem">
+                        <td>Chưa có <a href="javascript:void(0)" style="float:right" @click="openDetailModal('isOpenRoadMaintenanceModal')" title="Xem">
                                 <i class="fa fa-eye"></i> Xem </a>
                         </td>
-                        <td> Chưa có <a href="javascript:void(0)" style="float:right" @click="openDetailModal('isOpenVoluntaryInsuranceModal')" title="Xem">
+                        <td>Chưa có <a href="javascript:void(0)" style="float:right" @click="openDetailModal('isOpenVoluntaryInsuranceModal')" title="Xem">
                                 <i class="fa fa-eye"></i> Xem </a>
                         </td>
-                        <td> Chưa có <a href="javascript:void(0)" style="float:right" @click="openDetailModal('isOpenMandatoryInsuranceModal')" title="Xem">
+                        <td>Chưa có <a href="javascript:void(0)" style="float:right" @click="openDetailModal('isOpenMandatoryInsuranceModal')" title="Xem">
                                 <i class="fa fa-eye"></i> Xem </a>
                         </td>
-                        <td> Chưa có <a href="javascript:void(0)" style="float:right" @click="openDetailModal('isOpenRoadPermitModal')" title="Xem">
+                        <td>Chưa có <a href="javascript:void(0)" style="float:right" @click="openDetailModal('isOpenRoadPermitModal')" title="Xem">
                                 <i class="fa fa-eye"></i> Xem </a>
                         </td>
                         <td>Bãi xe 1</td>
                         <td align="center">
+                            <a href="javascript:void(0)" onclick="return active('xe','mooc_act','NF9fX19fMTVSMTI3MzY',1)">
+                                <img src="images/icons/check-1.png">
+                            </a>
+                        </td>
+                        <td align="center">
                             <a href="javascript:void(0)" title="Chỉnh sửa" @click="openDetailModal('isOpenVehicleEditModal')">
-                                <img src="images/icons/edit-1.png" class="e_NF9fX19fMTVIMDI5ODU" />
+                                <img src="images/icons/edit-1.png" class="e_NF9fX19fMTVSMTI3MzY">
                             </a>
                         </td>
                     </tr>
                     <tr>
                         <td align="center">2</td>
-                        <td align="center">3</td>
                         <td>
-                            <a href="javascript:void(0)" @click="openVehicleDetail('M19fX19fMTVDMjYzMjg')" class="bold">15C26328</a>
+                            <a href="javascript:void(0)" @click="openVehicleDetail('M19fX19fMTVSMTAzODI')" title="Xem đầy đủ">15R10382</a>
                         </td>
-                        <td>Xe 2 cầu</td>
+                        <td>3280000</td>
+                        <td>40'</td>
+                        <td>Mooc sương</td>
+                        <td>3 trục</td>
                         <td></td>
-                        <td>Vũ Tuấn Trường</td>
-                        <td>Xe nhà</td>
                         <td>
-                            <span class="green">Còn 37 (ngày)</span>
+                            <span class="red">29-02-2024/ Còn -26 (ngày)</span>
                             <a href="javascript:void(0)" style="float:right" @click="openDetailModal('isOpenVehicleInspectionModal')" title="Xem">
                                 <i class="fa fa-eye"></i> Xem </a>
                         </td>
-                        <td>
-                            <span class="green">Còn 37 (ngày)</span>
-                            <a href="javascript:void(0)" style="float:right" @click="openDetailModal('isOpenRoadMaintenanceModal')" title="Xem">
+                        <td>Chưa có <a href="javascript:void(0)" style="float:right" @click="openDetailModal('isOpenRoadMaintenanceModal')" title="Xem">
                                 <i class="fa fa-eye"></i> Xem </a>
                         </td>
-                        <td>
-                            <span class="green">Còn 219 (ngày)</span>
-                            <a href="javascript:void(0)" style="float:right" @click="openDetailModal('isOpenVoluntaryInsuranceModal')" title="Xem">
+                        <td>Chưa có <a href="javascript:void(0)" style="float:right" @click="openDetailModal('isOpenVoluntaryInsuranceModal')" title="Xem">
                                 <i class="fa fa-eye"></i> Xem </a>
                         </td>
-                        <td>
-                            <span class="green">Còn 219 (ngày)</span>
-                            <a href="javascript:void(0)" style="float:right" @click="openDetailModal('isOpenMandatoryInsuranceModal')" title="Xem">
+                        <td>Chưa có <a href="javascript:void(0)" style="float:right" @click="openDetailModal('isOpenMandatoryInsuranceModal')" title="Xem">
                                 <i class="fa fa-eye"></i> Xem </a>
                         </td>
-                        <td> Chưa có <a href="javascript:void(0)" style="float:right" @click="openDetailModal('isOpenRoadPermitModal')" title="Xem">
+                        <td>Chưa có <a href="javascript:void(0)" style="float:right" @click="openDetailModal('isOpenRoadPermitModal')" title="Xem">
                                 <i class="fa fa-eye"></i> Xem </a>
                         </td>
                         <td>Bãi xe 1</td>
                         <td align="center">
+                            <a href="javascript:void(0)" onclick="return active('xe','mooc_act','M19fX19fMTVSMTAzODI',1)">
+                                <img src="images/icons/check-1.png">
+                            </a>
+                        </td>
+                        <td align="center">
                             <a href="javascript:void(0)" title="Chỉnh sửa" @click="openDetailModal('isOpenVehicleEditModal')">
-                                <img src="images/icons/edit-1.png" class="e_M19fX19fMTVDMjYzMjg" />
+                                <img src="images/icons/edit-1.png" class="e_M19fX19fMTVSMTAzODI">
                             </a>
                         </td>
                     </tr>
                     <tr>
                         <td align="center">3</td>
-                        <td align="center">2</td>
                         <td>
-                            <a href="javascript:void(0)" @click="openVehicleDetail('Ml9fX19fMTVDMjUyOTI')" class="bold">15C25292</a>
+                            <a href="javascript:void(0)" @click="openVehicleDetail('Ml9fX19fMTVSMDc4MzI')" title="Xem đầy đủ">15R07832</a>
                         </td>
-                        <td>Xe 2 cầu</td>
-                        <td></td>
-                        <td>Nguyễn Thế Hanh</td>
+                        <td>3280000</td>
+                        <td>40'</td>
+                        <td>Mooc sương</td>
+                        <td>3 trục</td>
                         <td></td>
                         <td>
-                            <span class="red">Còn 9 (ngày)</span>
+                            <span class="green">10-04-2024/ Còn 15 (ngày)</span>
                             <a href="javascript:void(0)" style="float:right" @click="openDetailModal('isOpenVehicleInspectionModal')" title="Xem">
                                 <i class="fa fa-eye"></i> Xem </a>
                         </td>
-                        <td>
-                            <span class="red">Còn 9 (ngày)</span>
-                            <a href="javascript:void(0)" style="float:right" @click="openDetailModal('isOpenRoadMaintenanceModal')" title="Xem">
+                        <td>Chưa có <a href="javascript:void(0)" style="float:right" @click="openDetailModal('isOpenRoadMaintenanceModal')" title="Xem">
                                 <i class="fa fa-eye"></i> Xem </a>
                         </td>
-                        <td> Chưa có <a href="javascript:void(0)" style="float:right" @click="openDetailModal('isOpenVoluntaryInsuranceModal')" title="Xem">
+                        <td>Chưa có <a href="javascript:void(0)" style="float:right" @click="openDetailModal('isOpenVoluntaryInsuranceModal')" title="Xem">
                                 <i class="fa fa-eye"></i> Xem </a>
                         </td>
-                        <td> Chưa có <a href="javascript:void(0)" style="float:right" @click="openDetailModal('isOpenMandatoryInsuranceModal')" title="Xem">
+                        <td>Chưa có <a href="javascript:void(0)" style="float:right" @click="openDetailModal('isOpenMandatoryInsuranceModal')" title="Xem">
                                 <i class="fa fa-eye"></i> Xem </a>
                         </td>
-                        <td> Chưa có <a href="javascript:void(0)" style="float:right" @click="openDetailModal('isOpenRoadPermitModal')" title="Xem">
+                        <td>Chưa có <a href="javascript:void(0)" style="float:right" @click="openDetailModal('isOpenRoadPermitModal')" title="Xem">
                                 <i class="fa fa-eye"></i> Xem </a>
                         </td>
                         <td>Bãi xe 1</td>
                         <td align="center">
+                            <a href="javascript:void(0)" onclick="return active('xe','mooc_act','Ml9fX19fMTVSMDc4MzI',1)">
+                                <img src="images/icons/check-1.png">
+                            </a>
+                        </td>
+                        <td align="center">
                             <a href="javascript:void(0)" title="Chỉnh sửa" @click="openDetailModal('isOpenVehicleEditModal')">
-                                <img src="images/icons/edit-1.png" class="e_Ml9fX19fMTVDMjUyOTI" />
+                                <img src="images/icons/edit-1.png" class="e_Ml9fX19fMTVSMDc4MzI">
                             </a>
                         </td>
                     </tr>
                     <tr>
                         <td align="center">4</td>
-                        <td align="center">1</td>
                         <td>
-                            <a href="javascript:void(0)" @click="openVehicleDetail('MV9fX19fMTVDMTc2Njk')" class="bold">15C17669</a>
+                            <a href="javascript:void(0)" @click="openVehicleDetail('MV9fX19fMTVSMTM3OTc')" title="Xem đầy đủ">15R13797</a>
                         </td>
-                        <td>Xe 2 cầu</td>
-                        <td></td>
-                        <td>Nguyễn Văn Hậu</td>
+                        <td>3280000</td>
+                        <td>40'</td>
+                        <td>Mooc sương</td>
+                        <td>3 trục</td>
                         <td></td>
                         <td>
-                            <span class="red">Còn -11 (ngày)</span>
+                            <span class="red">14-03-2024/ Còn -12 (ngày)</span>
                             <a href="javascript:void(0)" style="float:right" @click="openDetailModal('isOpenVehicleInspectionModal')" title="Xem">
                                 <i class="fa fa-eye"></i> Xem </a>
                         </td>
-                        <td>
-                            <span class="red">Còn -11 (ngày)</span>
-                            <a href="javascript:void(0)" style="float:right" @click="openDetailModal('isOpenRoadMaintenanceModal')" title="Xem">
+                        <td>Chưa có <a href="javascript:void(0)" style="float:right" @click="openDetailModal('isOpenRoadMaintenanceModal')" title="Xem">
                                 <i class="fa fa-eye"></i> Xem </a>
                         </td>
-                        <td> Chưa có <a href="javascript:void(0)" style="float:right" @click="openDetailModal('isOpenVoluntaryInsuranceModal')" title="Xem">
+                        <td>Chưa có <a href="javascript:void(0)" style="float:right" @click="openDetailModal('isOpenVoluntaryInsuranceModal')" title="Xem">
                                 <i class="fa fa-eye"></i> Xem </a>
                         </td>
-                        <td> Chưa có <a href="javascript:void(0)" style="float:right" @click="openDetailModal('isOpenMandatoryInsuranceModal')" title="Xem">
+                        <td>Chưa có <a href="javascript:void(0)" style="float:right" @click="openDetailModal('isOpenMandatoryInsuranceModal')" title="Xem">
                                 <i class="fa fa-eye"></i> Xem </a>
                         </td>
-                        <td> Chưa có <a href="javascript:void(0)" style="float:right" @click="openDetailModal('isOpenRoadPermitModal')" title="Xem">
+                        <td>Chưa có <a href="javascript:void(0)" style="float:right" @click="openDetailModal('isOpenRoadPermitModal')" title="Xem">
                                 <i class="fa fa-eye"></i> Xem </a>
                         </td>
                         <td>Bãi xe 1</td>
                         <td align="center">
+                            <a href="javascript:void(0)" onclick="return active('xe','mooc_act','MV9fX19fMTVSMTM3OTc',1)">
+                                <img src="images/icons/check-1.png">
+                            </a>
+                        </td>
+                        <td align="center">
                             <a href="javascript:void(0)" title="Chỉnh sửa" @click="openDetailModal('isOpenVehicleEditModal')">
-                                <img src="images/icons/edit-1.png" class="e_MV9fX19fMTVDMTc2Njk" />
+                                <img src="images/icons/edit-1.png" class="e_MV9fX19fMTVSMTM3OTc">
                             </a>
                         </td>
                     </tr>
-                </table>
-            </form>
+                </tbody>
+            </table>
         </div>
         <div class="paging"></div>
     </div>
@@ -207,6 +210,7 @@
     <VehicleDetailModal
         v-if="isOpenVehicleDetailModal"
         :show="isOpenVehicleDetailModal"
+        :isMooc=true
         @close="onCloseDetailModal('isOpenVehicleDetailModal')"
     ></VehicleDetailModal>
     <VehicleInspectionModal
@@ -237,6 +241,7 @@
     <VehicleEditModal
         v-if="isOpenVehicleEditModal"
         :show="isOpenVehicleEditModal"
+        :isMooc=true
         @close="onCloseDetailModal('isOpenVehicleEditModal')"
     ></VehicleEditModal>
 </template>

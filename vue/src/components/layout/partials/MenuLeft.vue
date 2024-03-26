@@ -40,7 +40,7 @@
                     <ul>
                         <li><a href="./vehicle">Đội xe</a></li>
                         <li><a href="./vehicle/mooc">Rơ mooc</a></li>
-                        <li><a href="./vehicle/taixe">Tài xế</a></li>
+                        <li><a href="./vehicle/driver">Tài xế</a></li>
                     </ul></li>
                 <li><a href="./baocao"><i class="fa fa-area-chart faleft"></i> <span><i class="fa fa-area-chart mnh"></i> Báo cáo</span></a>
                     <ul>
