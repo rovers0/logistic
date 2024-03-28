@@ -14,7 +14,7 @@
       <menu-left></menu-left>
       <banner-top></banner-top>
     </template>
-    <div class="page" :class="menu == 1 ? 'page2' : ''">
+    <div class="page" :class="menu != 1 ? 'page2' : ''">
       <router-view></router-view>
     </div>
   </div>

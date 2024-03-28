@@ -13,19 +13,19 @@
                         <tr>
                             <td width="40%"></td>
                             <td>
-                                <a href="javascript:void(0)" onclick="return frmForm('lop','lichsu','MTVSMTI3MzZfX19fXzRfX19fXzNQMQ')" style="color:#006080">3P1 - Thay: <b class="red" style="opacity:0.3">0</b> - Sữa: <b class="red" style="opacity:0.3">0</b>
+                                <a href="javascript:void(0)" @click="onOpenTireInformationModal('MTVSMTI3MzZfX19fXzRfX19fXzNQMQ')" style="color:#006080">3P1 - Thay: <b class="red" style="opacity:0.3">0</b> - Sữa: <b class="red" style="opacity:0.3">0</b>
                                     <p style="font-size:10px;padding:4px 0 0 0;color:#000;opacity:0.3">Seri number: <span class="red">Chưa cập nhật</span>
                                     </p>
                                 </a>
                             </td>
                             <td>
-                                <a href="javascript:void(0)" onclick="return frmForm('lop','lichsu','MTVSMTI3MzZfX19fXzRfX19fXzRQMQ')" style="color:#006080">4P1 - Thay: <b class="red" style="opacity:0.3">0</b> - Sữa: <b class="red" style="opacity:0.3">0</b>
+                                <a href="javascript:void(0)" @click="onOpenTireInformationModal('MTVSMTI3MzZfX19fXzRfX19fXzRQMQ')" style="color:#006080">4P1 - Thay: <b class="red" style="opacity:0.3">0</b> - Sữa: <b class="red" style="opacity:0.3">0</b>
                                     <p style="font-size:10px;padding:4px 0 0 0;color:#000;opacity:0.3">Seri number: <span class="red">Chưa cập nhật</span>
                                     </p>
                                 </a>
                             </td>
                             <td>
-                                <a href="javascript:void(0)" onclick="return frmForm('lop','lichsu','MTVSMTI3MzZfX19fXzRfX19fXzVQMQ')" style="color:#006080">5P1 - Thay: <b class="red" style="opacity:0.3">0</b> - Sữa: <b class="red" style="opacity:0.3">0</b>
+                                <a href="javascript:void(0)" @click="onOpenTireInformationModal('MTVSMTI3MzZfX19fXzRfX19fXzVQMQ')" style="color:#006080">5P1 - Thay: <b class="red" style="opacity:0.3">0</b> - Sữa: <b class="red" style="opacity:0.3">0</b>
                                     <p style="font-size:10px;padding:4px 0 0 0;color:#000;opacity:0.3">Seri number: <span class="red">Chưa cập nhật</span>
                                     </p>
                                 </a>
@@ -34,19 +34,19 @@
                         <tr>
                             <td width="40%"></td>
                             <td>
-                                <a href="javascript:void(0)" onclick="return frmForm('lop','lichsu','MTVSMTI3MzZfX19fXzRfX19fXzNQMg')" style="color:#006080">3P2 - Thay: <b class="red" style="opacity:0.3">0</b> - Sữa: <b class="red" style="opacity:0.3">0</b>
+                                <a href="javascript:void(0)" @click="onOpenTireInformationModal('MTVSMTI3MzZfX19fXzRfX19fXzNQMg')" style="color:#006080">3P2 - Thay: <b class="red" style="opacity:0.3">0</b> - Sữa: <b class="red" style="opacity:0.3">0</b>
                                     <p style="font-size:10px;padding:4px 0 0 0;color:#000;opacity:0.3">Seri number: <span class="red">Chưa cập nhật</span>
                                     </p>
                                 </a>
                             </td>
                             <td>
-                                <a href="javascript:void(0)" onclick="return frmForm('lop','lichsu','MTVSMTI3MzZfX19fXzRfX19fXzRQMg')" style="color:#006080">4P2 - Thay: <b class="red" style="opacity:0.3">0</b> - Sữa: <b class="red" style="opacity:0.3">0</b>
+                                <a href="javascript:void(0)" @click="onOpenTireInformationModal('MTVSMTI3MzZfX19fXzRfX19fXzRQMg')" style="color:#006080">4P2 - Thay: <b class="red" style="opacity:0.3">0</b> - Sữa: <b class="red" style="opacity:0.3">0</b>
                                     <p style="font-size:10px;padding:4px 0 0 0;color:#000;opacity:0.3">Seri number: <span class="red">Chưa cập nhật</span>
                                     </p>
                                 </a>
                             </td>
                             <td>
-                                <a href="javascript:void(0)" onclick="return frmForm('lop','lichsu','MTVSMTI3MzZfX19fXzRfX19fXzVQMg')" style="color:#006080">5P2 - Thay: <b class="red" style="opacity:0.3">0</b> - Sữa: <b class="red" style="opacity:0.3">0</b>
+                                <a href="javascript:void(0)" @click="onOpenTireInformationModal('MTVSMTI3MzZfX19fXzRfX19fXzVQMg')" style="color:#006080">5P2 - Thay: <b class="red" style="opacity:0.3">0</b> - Sữa: <b class="red" style="opacity:0.3">0</b>
                                     <p style="font-size:10px;padding:4px 0 0 0;color:#000;opacity:0.3">Seri number: <span class="red">Chưa cập nhật</span>
                                     </p>
                                 </a>
@@ -60,19 +60,19 @@
                         <tr>
                             <td width="40%"></td>
                             <td>
-                                <a href="javascript:void(0)" onclick="return frmForm('lop','lichsu','MTVSMTI3MzZfX19fXzRfX19fXzNUMg')" style="color:#006080">3T2 - Thay: <b class="red" style="opacity:0.3">0</b> - Sữa: <b class="red" style="opacity:0.3">0</b>
+                                <a href="javascript:void(0)" @click="onOpenTireInformationModal('MTVSMTI3MzZfX19fXzRfX19fXzNUMg')" style="color:#006080">3T2 - Thay: <b class="red" style="opacity:0.3">0</b> - Sữa: <b class="red" style="opacity:0.3">0</b>
                                     <p style="font-size:10px;padding:4px 0 0 0;color:#000;opacity:0.3">Seri number: <span class="red">Chưa cập nhật</span>
                                     </p>
                                 </a>
                             </td>
                             <td>
-                                <a href="javascript:void(0)" onclick="return frmForm('lop','lichsu','MTVSMTI3MzZfX19fXzRfX19fXzRUMg')" style="color:#006080">4T2 - Thay: <b class="red" style="opacity:0.3">0</b> - Sữa: <b class="red" style="opacity:0.3">0</b>
+                                <a href="javascript:void(0)" @click="onOpenTireInformationModal('MTVSMTI3MzZfX19fXzRfX19fXzRUMg')" style="color:#006080">4T2 - Thay: <b class="red" style="opacity:0.3">0</b> - Sữa: <b class="red" style="opacity:0.3">0</b>
                                     <p style="font-size:10px;padding:4px 0 0 0;color:#000;opacity:0.3">Seri number: <span class="red">Chưa cập nhật</span>
                                     </p>
                                 </a>
                             </td>
                             <td>
-                                <a href="javascript:void(0)" onclick="return frmForm('lop','lichsu','MTVSMTI3MzZfX19fXzRfX19fXzVUMg')" style="color:#006080">5T2 - Thay: <b class="red">1</b> - Sữa: <b class="red" style="opacity:0.3">0</b>
+                                <a href="javascript:void(0)" @click="onOpenTireInformationModal('MTVSMTI3MzZfX19fXzRfX19fXzVUMg')" style="color:#006080">5T2 - Thay: <b class="red">1</b> - Sữa: <b class="red" style="opacity:0.3">0</b>
                                     <p style="font-size:10px;padding:4px 0;color:#000">Seri number: <span class="red">E205083960</span>
                                     </p>
                                     <p style="font-size:10px;color:#000">Ngày thay lốp: 2023-11-22</p>
@@ -82,19 +82,19 @@
                         <tr>
                             <td width="40%"></td>
                             <td>
-                                <a href="javascript:void(0)" onclick="return frmForm('lop','lichsu','MTVSMTI3MzZfX19fXzRfX19fXzNUMQ')" style="color:#006080">3T1 - Thay: <b class="red" style="opacity:0.3">0</b> - Sữa: <b class="red" style="opacity:0.3">0</b>
+                                <a href="javascript:void(0)" @click="onOpenTireInformationModal('MTVSMTI3MzZfX19fXzRfX19fXzNUMQ')" style="color:#006080">3T1 - Thay: <b class="red" style="opacity:0.3">0</b> - Sữa: <b class="red" style="opacity:0.3">0</b>
                                     <p style="font-size:10px;padding:4px 0 0 0;color:#000;opacity:0.3">Seri number: <span class="red">Chưa cập nhật</span>
                                     </p>
                                 </a>
                             </td>
                             <td>
-                                <a href="javascript:void(0)" onclick="return frmForm('lop','lichsu','MTVSMTI3MzZfX19fXzRfX19fXzRUMQ')" style="color:#006080">4T1 - Thay: <b class="red" style="opacity:0.3">0</b> - Sữa: <b class="red" style="opacity:0.3">0</b>
+                                <a href="javascript:void(0)" @click="onOpenTireInformationModal('MTVSMTI3MzZfX19fXzRfX19fXzRUMQ')" style="color:#006080">4T1 - Thay: <b class="red" style="opacity:0.3">0</b> - Sữa: <b class="red" style="opacity:0.3">0</b>
                                     <p style="font-size:10px;padding:4px 0 0 0;color:#000;opacity:0.3">Seri number: <span class="red">Chưa cập nhật</span>
                                     </p>
                                 </a>
                             </td>
                             <td>
-                                <a href="javascript:void(0)" onclick="return frmForm('lop','lichsu','MTVSMTI3MzZfX19fXzRfX19fXzVUMQ')" style="color:#006080">5T1 - Thay: <b class="red">1</b> - Sữa: <b class="red" style="opacity:0.3">0</b>
+                                <a href="javascript:void(0)" @click="onOpenTireInformationModal('MTVSMTI3MzZfX19fXzRfX19fXzVUMQ')" style="color:#006080">5T1 - Thay: <b class="red">1</b> - Sữa: <b class="red" style="opacity:0.3">0</b>
                                     <p style="font-size:10px;padding:4px 0;color:#000">Seri number: <span class="red">E205016071</span>
                                     </p>
                                     <p style="font-size:10px;color:#000">Ngày thay lốp: 2023-11-22</p>
