@@ -6,10 +6,10 @@ const state = {
         parkingLot: null,
     },
     addNew: {
-        serial: '15R12736',
-        frame_number: 'LJRC12395H2008362',
+        serial: null,
+        frame_number: null,
         packing_id: null,
-        weight: '3305000',
+        weight: null,
         size: null,
         type: null,
         axis: null,
@@ -51,6 +51,27 @@ const actions = {
     updateMooc({ commit }, {id, data}) {
         commit('setLoading', true, { root: true });
         return axiosClient.post("romooc/" + id, data).then((res) => {
+            commit('setLoading', false, { root: true });
+            return res;
+        });
+    },
+    moocDocuments({ commit }, {mooc_id, data}) {
+        commit('setLoading', true, { root: true });
+        return axiosClient.post("romooc/" + mooc_id + "/documents", data).then((res) => {
+            commit('setLoading', false, { root: true });
+            return res;
+        });
+    },
+    deleteMoocMedia({ commit }, {id, mediaId}) {
+        commit('setLoading', true, { root: true });
+        return axiosClient.delete("romooc/" + id + "/destroy-media/" + mediaId,).then((res) => {
+            commit('setLoading', false, { root: true });
+            return res;
+        });
+    },
+    deleteMoocDocumentMedia({ commit }, {id, mediaId}) {
+        commit('setLoading', true, { root: true });
+        return axiosClient.delete("romooc/" + id + "/destroy-document-media/" + mediaId,).then((res) => {
             commit('setLoading', false, { root: true });
             return res;
         });

@@ -15,6 +15,11 @@ function checkTime(e) {
   return e < 10 && (e = "0" + e), e
 };
 
+function checknumber(e) {
+    e = (e = e || window.event).which || e.keyCode;
+    return !(31 < e && (e < 48 || 57 < e) && (alert("Vui lòng nhập số!"), 1))
+}
+
 function previewImg(e, t) {
   var n = t,
       a = document.getElementById("img_file").files,

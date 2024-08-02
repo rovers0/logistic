@@ -47,4 +47,11 @@ export default {
       return response;
     });
   },
+  getMaster({ commit }, data) {
+    commit('setLoading', true, { root: true });
+    return axiosClient.get("booking/master").then((res) => {
+        commit('setLoading', false, { root: true });
+        return res;
+    });
+  },
 };

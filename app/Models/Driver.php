@@ -52,4 +52,9 @@ class Driver extends Model implements HasMedia
     {
         return $this->belongsTo(User::class);
     }
+
+    public function vehicleMobilization()
+    {
+        return $this->hasMany(CommandMobile::class);
+    }
 }

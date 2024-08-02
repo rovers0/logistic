@@ -49,6 +49,10 @@ class User extends Authenticatable implements HasMedia
         'password' => 'hashed',
     ];
 
+    protected $appends = [
+        'roles'
+    ];
+
     public function isAdmin()
     {
         return $this->role & UserRole::ADMIN->value;
@@ -57,6 +61,32 @@ class User extends Authenticatable implements HasMedia
     public function isDriver()
     {
         return $this->role & UserRole::DRIVER->value;
+    }
+
+    public function isAccountant()
+    {
+        return $this->role & UserRole::ACCOUNTANT->value;
+    }
+
+    public function isOp()
+    {
+        return $this->role & UserRole::OP->value;
+    }
+
+    public function isVehicleControl()
+    {
+        return $this->role & UserRole::VEHICLE_CONTROL->value;
+    }
+
+    public function getRolesAttribute()
+    {
+        $roles = [];
+        foreach (UserRole::cases() as $key => $value) {
+            if ($this->role & $value->value) {
+                $roles[] = $value->value;
+            }
+        }
+        return $roles;
     }
 
     public static function checkUser($request)

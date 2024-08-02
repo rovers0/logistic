@@ -6,6 +6,9 @@ import state from './state/index'
 import vehicle from './modules/vehicle'
 import driver from './modules/driver'
 import mooc from './modules/mooc'
+import booking from './modules/booking'
+import order from './modules/order'
+import report from './modules/report'
 
 const store = createStore({
     state: state,
@@ -19,7 +22,10 @@ const store = createStore({
     modules: {
         vehicle,
         driver,
-        mooc
+        mooc,
+        booking,
+        order,
+        report
     }
 })
 

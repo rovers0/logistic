@@ -563,11 +563,11 @@
                 <ul class="useronline">
                     <li> <span class="user_avt">NC</span>
                         <h4><a href="javascript:void(0)" onclick="return frmForm('home','log_list','OTBfX19fXzRfX19fXzFfX19fX05ndXnhu4VuIFRow7l5IENoaQ')">Nguyễn Thùy Chi</a></h4>
-                        <p>Đăng nhập: 21-03-2024 10:33:23 <img src="images/icons/on.gif"></p>
+                        <p>Đăng nhập: 21-03-2024 10:33:23 <img src="/images/icons/on.gif"></p>
                     </li>
                     <li> <span class="user_avt">VV</span>
                         <h4><a href="javascript:void(0)" onclick="return frmForm('home','log_list','OTVfX19fXzEwX19fX18xX19fX19WdG0')">Vtm</a></h4>
-                        <p>Đăng nhập: 21-03-2024 13:17:46 <img src="images/icons/on.gif"></p>
+                        <p>Đăng nhập: 21-03-2024 13:17:46 <img src="/images/icons/on.gif"></p>
                     </li>
                     <li> <span class="user_avt" style="background:#e5e5e5;color:#b7b7b7">AA</span>
                         <h4><a href="javascript:void(0)" onclick="return frmForm('home','log_list','NTlfX19fXzBfX19fXzFfX19fX0FkbWluaXN0cmF0b3I')" style="color:#b7b7b7">Administrator</a></h4>
@@ -596,7 +596,7 @@ export default {
     el: '#page',
     data: function () {
         return {
-            
+
         }
     },
     mounted: function () {

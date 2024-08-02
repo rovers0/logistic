@@ -7,8 +7,8 @@
         <form enctype="multipart/form-data">
             <a href="javascript:void(0)" title="Thêm mới" class="add" @click="openModal('isOpenVehicleAddModal')">
                 <i class="fa fa-plus"></i> Thêm mới </a>
-            <a href="javascript:void(0)" title="Nhập từ file Excel" class="add">
-                <i class="fa fa-file-excel-o"></i> Nhập file Excel </a>
+            <a href="javascript:void(0)" title="Nhập từ file Excel">
+                <i class="fa fa-file-excel-o" ></i> Nhập file Excel </a>
             <input type="text" v-model="search.serial" @click="openSelectLicensePlatesModal('isOpenSelectLicensePlatesModal')" style="width:90px" placeholder="Số rơ mooc" maxlength="30" autocomplete="off" readonly="">
             <select v-model="search.parkingLot">
                 <option :value="null">Bãi xe</option>
@@ -48,30 +48,45 @@
                     <td>{{ MOOC_TYPE[item.type] }}</td>
                     <td>{{ AXIS[item.axis] }}</td>
                     <td></td>
-                    <td>Chưa có <a href="javascript:void(0)" style="float:right" @click="openModal('isOpenVehicleInspectionModal')" title="Xem">
+                    <td>
+                        <span class="red" v-if="item.inspection"><span v-html="daysUsable(item.inspection.expiration_date)"></span></span>
+                        <span v-else>Chưa có</span>
+                        <a href="javascript:void(0)" style="float:right" @click="openDocumentModal('vehicleInspection', item.inspection, item.id)" title="Xem">
                             <i class="fa fa-eye"></i> Xem </a>
                     </td>
-                    <td>Chưa có <a href="javascript:void(0)" style="float:right" @click="openModal('isOpenRoadMaintenanceModal')" title="Xem">
+                    <td>
+                        <span class="red" v-if="item.roadMaintenance"><span v-html="daysUsable(item.roadMaintenance.expiration_date)"></span></span>
+                        <span v-else>Chưa có</span>
+                        <a href="javascript:void(0)" style="float:right" @click="openDocumentModal('roadMaintenance', item.roadMaintenance, item.id)" title="Xem">
                             <i class="fa fa-eye"></i> Xem </a>
                     </td>
-                    <td>Chưa có <a href="javascript:void(0)" style="float:right" @click="openModal('isOpenVoluntaryInsuranceModal')" title="Xem">
+                    <td>
+                        <span class="red" v-if="item.voluntaryInsurance"><span v-html="daysUsable(item.voluntaryInsurance.expiration_date)"></span></span>
+                        <span v-else>Chưa có</span>
+                        <a href="javascript:void(0)" style="float:right" @click="openDocumentModal('voluntaryInsurance', item.voluntaryInsurance, item.id)" title="Xem">
                             <i class="fa fa-eye"></i> Xem </a>
                     </td>
-                    <td>Chưa có <a href="javascript:void(0)" style="float:right" @click="openModal('isOpenMandatoryInsuranceModal')" title="Xem">
+                    <td>
+                        <span class="red" v-if="item.mandatoryInsurance"><span v-html="daysUsable(item.mandatoryInsurance.expiration_date)"></span></span>
+                        <span v-else>Chưa có</span>
+                        <a href="javascript:void(0)" style="float:right" @click="openDocumentModal('mandatoryInsurance', item.mandatoryInsurance, item.id)" title="Xem">
                             <i class="fa fa-eye"></i> Xem </a>
                     </td>
-                    <td>Chưa có <a href="javascript:void(0)" style="float:right" @click="openModal('isOpenRoadPermitModal')" title="Xem">
+                    <td>
+                        <span class="red" v-if="item.roadPermit"><span v-html="daysUsable(item.roadPermit.expiration_date)"></span></span>
+                        <span v-else>Chưa có</span>
+                        <a href="javascript:void(0)" style="float:right" @click="openDocumentModal('roadPermit', item.roadPermit, item.id)" title="Xem">
                             <i class="fa fa-eye"></i> Xem </a>
                     </td>
                     <td>{{ item.parking.name }}</td>
                     <td align="center">
                         <a href="javascript:void(0)">
-                            <img src="images/icons/check-1.png">
+                            <img src="/images/icons/check-1.png">
                         </a>
                     </td>
                     <td align="center">
                         <a href="javascript:void(0)" title="Chỉnh sửa" @click="openModal('isOpenVehicleEditModal', item)">
-                            <img src="images/icons/edit-1.png" class="e_NF9fX19fMTVSMTI3MzY">
+                            <img src="/images/icons/edit-1.png" class="e_NF9fX19fMTVSMTI3MzY">
                         </a>
                     </td>
                 </tr>
@@ -87,31 +102,41 @@
         :isMooc=true
         @close="onCloseDetailModal('isOpenVehicleDetailModal')"
     ></VehicleDetailModal>
-    <VehicleInspectionModal
-        v-if="isOpenVehicleInspectionModal"
-        :show="isOpenVehicleInspectionModal"
-        @close="onCloseDetailModal('isOpenVehicleInspectionModal')"
-    ></VehicleInspectionModal>
-    <RoadMaintenanceModal
-        v-if="isOpenRoadMaintenanceModal"
-        :show="isOpenRoadMaintenanceModal"
-        @close="onCloseDetailModal('isOpenRoadMaintenanceModal')"
-    ></RoadMaintenanceModal>
-    <VoluntaryInsuranceModal
-        v-if="isOpenVoluntaryInsuranceModal"
-        :show="isOpenVoluntaryInsuranceModal"
-        @close="onCloseDetailModal('isOpenVoluntaryInsuranceModal')"
-    ></VoluntaryInsuranceModal>
-    <MandatoryInsuranceModal
-        v-if="isOpenMandatoryInsuranceModal"
-        :show="isOpenMandatoryInsuranceModal"
-        @close="onCloseDetailModal('isOpenMandatoryInsuranceModal')"
-    ></MandatoryInsuranceModal>
-    <RoadPermitModal
-        v-if="isOpenRoadPermitModal"
-        :show="isOpenRoadPermitModal"
-        @close="onCloseDetailModal('isOpenRoadPermitModal')"
-    ></RoadPermitModal>
+    <MoocDocumentModal
+        v-if="vehicleInspection"
+        :modalType="'vehicleInspection'"
+        :data="this.modalData.vehicleInspection"
+        :moocID="this.modalData.id"
+        @close="onCloseDocument"
+    ></MoocDocumentModal>
+    <MoocDocumentModal
+        v-if="roadMaintenance"
+        :modalType="'roadMaintenance'"
+        :data="this.modalData.roadMaintenance"
+        :moocID="this.modalData.id"
+        @close="onCloseDocument"
+    ></MoocDocumentModal>
+    <MoocDocumentModal
+        v-if="voluntaryInsurance"
+        :modalType="'voluntaryInsurance'"
+        :moocID="this.modalData.id"
+        :data="this.modalData.voluntaryInsurance"
+        @close="onCloseDocument"
+    ></MoocDocumentModal>
+    <MoocDocumentModal
+        v-if="mandatoryInsurance"
+        :modalType="'mandatoryInsurance'"
+        :data="this.modalData.mandatoryInsurance"
+        :moocID="this.modalData.id"
+        @close="onCloseDocument"
+    ></MoocDocumentModal>
+    <MoocDocumentModal
+        v-if="roadPermit"
+        :modalType="'roadPermit'"
+        :data="this.modalData.roadPermit"
+        :moocID="this.modalData.id"
+        @close="onCloseDocument"
+    ></MoocDocumentModal>
     <VehicleEditModal
         v-if="isOpenVehicleEditModal"
         :vehicleInfor="vehicleInfor"
@@ -136,15 +161,12 @@
 <script setup>
 import moment from 'moment';
 import VehicleDetailModal from './modal/VehicleDetailModal.vue';
-import VehicleInspectionModal from './modal/VehicleInspectionModal.vue';
-import RoadMaintenanceModal from './modal/RoadMaintenanceModal.vue';
-import VoluntaryInsuranceModal from './modal/VoluntaryInsuranceModal.vue';
-import MandatoryInsuranceModal from './modal/MandatoryInsuranceModal.vue';
-import RoadPermitModal from './modal/RoadPermitModal.vue';
+import MoocDocumentModal from './modal/MoocDocumentModal.vue';
 import VehicleEditModal from './modal/VehicleEditModal.vue';
 import VehicleAddModal from './modal/VehicleAddModal.vue';
-import SelectLicensePlatesModal from './modal/SelectLicensePlatesModal.vue';
+import SelectLicensePlatesModal from '@/components/SelectLicensePlatesModal.vue';
 import {SIZE, MOOC_TYPE, AXIS} from '../../components/Constants.vue';
+import { daysUsable } from '@/helper.js';
 </script>
 <script>
 export default {
@@ -152,16 +174,23 @@ export default {
     data: function () {
         return {
             isOpenVehicleDetailModal: false,
-            isOpenVehicleInspectionModal: false,
-            isOpenRoadMaintenanceModal: false,
-            isOpenVoluntaryInsuranceModal: false,
-            isOpenMandatoryInsuranceModal: false,
-            isOpenRoadPermitModal: false,
+            vehicleInspection: false,
+            roadMaintenance: false,
+            voluntaryInsurance: false,
+            mandatoryInsurance: false,
+            roadPermit: false,
             isOpenVehicleEditModal: false,
             isOpenVehicleAddModal: false,
             isOpenSelectLicensePlatesModal: false,
             vehicleInfor: null,
             search: {...this.$store.state.mooc.search},
+            modalData: {
+                vehicleInspection: null,
+                roadMaintenance: null,
+                voluntaryInsurance: null,
+                mandatoryInsurance: null,
+                roadPermit: null,
+            },
             romoocs: [],
             master: [],
             serials: []
@@ -187,6 +216,19 @@ export default {
             this[type] = true,
             this.vehicleInfor = data
         },
+        openDocumentModal: function (type, data = null, moocID = null) {
+            this[type] = true;
+            this.modalData[type]  = data;
+            this.modalData.id  = moocID;
+        },
+        onCloseDocument: function (event) {
+            if(event && event.modal) {
+                this[event.modal] = false
+            }
+            if(event && event.reload) {
+                this.getData();
+            }
+        },
         onCloseDetailModal: function (type) {
             this[type] = false
         },
@@ -204,8 +246,8 @@ export default {
             });
         },
         reset: function () {
-            this.search.plate = null;
-            this.search.parking = null;
+            this.search = {...this.$store.state.mooc.search};
+            this.getData();
         },
         getMaster: function () {
             this.master = [];

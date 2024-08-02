@@ -41,6 +41,7 @@ export default {
             const selected = Object.keys(this.selectedItems).filter(
                 item => this.selectedItems[item]
             );
+            console.log('selected:', selected)
             this.$emit('onSubmit', selected);
             this.onClose();
         },
@@ -49,7 +50,6 @@ export default {
         },
     },
     created: async function () {
-        console.log(this.data)
         this.fillterData = {...this.data}
     }
 }

@@ -103,9 +103,9 @@
                                 <td>thay lốp lái cho 15C26328</td>
                                 <td class="red">4,700,000</td>
                                 <td>
-                                    <a href="data/asset/1700667888_6_z4906147556032-ff35f5b712287212cd3d17dabaecb0ca.jpg" style="color:#fff" class="colorbox cboxElement" title="Xem ảnh">
+                                    <a href="#" style="color:#fff" class="colorbox cboxElement" title="Xem ảnh">
                                         <div class="filehid">
-                                            <img src="data/asset/1700667888_6_z4906147556032-ff35f5b712287212cd3d17dabaecb0ca.jpg">
+                                            <img src="">
                                         </div>
                                     </a>
                                 </td>

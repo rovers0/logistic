@@ -29,12 +29,11 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'phone' => 'required|regex:/(0)[0-9]{9}/',
+            'phone' => 'required', //|regex:/(0)[0-9]{9}/
             'password' => 'required',
         ]);
-
+        
         $user = User::checkUser($request);
-
         if (!$user) {
             return response([
                 'error' => __('auth.user_password_incorrect'),

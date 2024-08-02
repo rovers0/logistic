@@ -6,7 +6,7 @@ const state = {
         parkingLot: null,
         axle: null
     },
-    addNew: 
+    addNew:
     {
         plate: null,
         chassis: null,
@@ -18,6 +18,18 @@ const state = {
         note: null,
         image: null,
         attachment: null,
+        images: [],
+        addable_files: []
+    },
+    addNewDoc:
+    {
+        document_type: null,
+        registration_date: null,
+        expiration_date: null,
+        effective_date: null,
+        notice_duration: null,
+        fees: null,
+        note: null,
         images: [],
         addable_files: []
     },
@@ -48,6 +60,27 @@ const actions = {
     updateVehicle({ commit }, {id, data}) {
         commit('setLoading', true, { root: true });
         return axiosClient.post("vehicle/" + id, data).then((res) => {
+            commit('setLoading', false, { root: true });
+            return res;
+        });
+    },
+    vehicleDocuments({ commit }, {vehicle_id, data}) {
+        commit('setLoading', true, { root: true });
+        return axiosClient.post("vehicle/" + vehicle_id + "/documents", data).then((res) => {
+            commit('setLoading', false, { root: true });
+            return res;
+        });
+    },
+    deleteVehicleMedia({ commit }, {id, mediaId}) {
+        commit('setLoading', true, { root: true });
+        return axiosClient.delete("vehicle/" + id + "/destroy-media/" + mediaId,).then((res) => {
+            commit('setLoading', false, { root: true });
+            return res;
+        });
+    },
+    deleteVehicleDocumentMedia({ commit }, {id, mediaId}) {
+        commit('setLoading', true, { root: true });
+        return axiosClient.delete("vehicle/" + id + "/destroy-document-media/" + mediaId,).then((res) => {
             commit('setLoading', false, { root: true });
             return res;
         });

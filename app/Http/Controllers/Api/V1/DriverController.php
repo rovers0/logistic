@@ -20,6 +20,27 @@ use Spatie\SimpleExcel\SimpleExcelReader;
 
 class DriverController extends Controller
 {
+    protected $driversValidates = [
+        'name.required' => 'Vui lòng nhập tên.',
+        'vehicles.required' => 'Vui lòng chọn xe.',
+        'vehicles.array' => 'Xe không hợp lệ.',
+        'phone.required' => 'Vui lòng nhập số điện thoại.',
+        'phone.unique' => 'Số điện thoại đã tồn tại.',
+        'birthday.required' => 'Vui lòng nhập ngày sinh.',
+        'passport.required' => 'Vui lòng nhập số CMND/CCCD/Passport.',
+        'relative_phone.required' => 'Vui lòng nhập số điện thoại của người thân.',
+        'relative_name.required' => 'Vui lòng nhập tên người thân.',
+        'salary.required' => 'Vui lòng nhập mức lương.',
+        'license_class.required' => 'Vui lòng nhập loại bằng lái.',
+        'license.required' => 'Vui lòng nhập số bằng lái.',
+        'license_expired_date.required' => 'Vui lòng nhập ngày hết hạn bằng lái.',
+        'start_date.required' => 'Vui lòng nhập ngày bắt đầu làm việc.',
+        'cv_root_file.required' => 'Vui lòng chọn File hồ sơ gốc + Biên bản giao xe.',
+        'cv_root_file.*.file' => 'File hồ sơ gốc + Biên bản giao xe không hợp lệ.',
+        'email.email' => 'Địa chỉ email không hợp lệ.',
+        'addable_files.*.file' => 'File đính kèm không hợp lệ.',
+    ];
+
     public function index(Request $request)
     {
         try {
@@ -50,7 +71,7 @@ class DriverController extends Controller
             $validator = Validator::make($request->all(), [
                 'name' => 'required',
                 'vehicles' => 'required|array',
-                'phone' => 'required',
+                'phone' => 'required|unique:users,phone',
                 'birthday' => 'required',
                 'passport' => 'required',
                 'relative_phone' => 'required',
@@ -76,13 +97,13 @@ class DriverController extends Controller
                 'status' => 'nullable',
                 'addable_files' => 'nullable|array',
                 'addable_files.*' => 'file',
-            ]);
+            ], $this->driversValidates);
             if ($validator->fails())
-                return $this->responseApiError(__('Có lỗi xảy ra! Vui lòng thử lại sau.'), $validator->errors());
+                return $this->responseApiError(__('Có lỗi xảy ra! Vui lòng thử lại sau.'), $validator->errors(), 422);
 
             // make user for driver
             $checkUser = User::where('account', $request->phone)->first();
-            if ($checkUser) return $this->responseApiError(__('User phone account existed'));
+            if ($checkUser) return $this->responseApiError(__('User phone account existed'), ['phone' => ['Số điện thoại đã tồn tại.']], 422);
 
             $user = User::create([
                 'name' => $request->name,
@@ -148,8 +169,6 @@ class DriverController extends Controller
                 'license' => 'required',
                 'license_expired_date' => 'required',
                 'start_date' => 'required',
-                //'cv_root_file' => 'required|file',
-
                 'email' => 'nullable|email',
                 'bith_place' => 'nullable',
                 'allowance' => 'nullable',
@@ -164,9 +183,9 @@ class DriverController extends Controller
                 'status' => 'nullable',
                 'addable_files' => 'nullable|array',
                 'addable_files.*' => 'file',
-            ]);
+            ], $this->driversValidates);
             if ($validator->fails())
-                return $this->responseApiError(__('Có lỗi xảy ra! Vui lòng thử lại sau.'), $validator->errors());
+                return $this->responseApiError(__('Có lỗi xảy ra! Vui lòng thử lại sau.'), $validator->errors(), 422);
 
             $driver->user()->update([
                 'name' => $request->name,
@@ -202,20 +221,12 @@ class DriverController extends Controller
 
             $driver->vehicles()->sync($request->vehicles);
 
-            //add media here use media library
-            // if ($request->file('cv_root_file')) {
-            //     $driver->clearMediaCollection(MediaCollection::CV_ROOT->value);
-            //     $driver->addMedia($request->file('cv_root_file'))->toMediaCollection(MediaCollection::CV_ROOT->value);
-            // }
-
             if ($request->file('cv_root_file') && count($request->file('cv_root_file'))) {
-                $driver->clearMediaCollection(MediaCollection::CV_ROOT->value);
                 foreach ($request->file('cv_root_file') as $key => $value) {
                     $driver->addMedia($value)->toMediaCollection(MediaCollection::CV_ROOT->value);
                 }
             }
             if ($request->file('addable_files') && count($request->file('addable_files'))) {
-                $driver->clearMediaCollection(MediaCollection::DOCUMENT->value);
                 foreach ($request->file('addable_files') as $key => $value) {
                     $driver->addMedia($value)->toMediaCollection(MediaCollection::DOCUMENT->value);
                 }
@@ -293,6 +304,35 @@ class DriverController extends Controller
             };
 
             return $this->responseApiSuccess($file);
+        } catch (\Exception $error) {
+            return $this->responseApiError(__('Có lỗi xảy ra! Vui lòng thử lại sau.'), $error->getMessage());
+        }
+    }
+
+    public function getDriverAll(Request $request)
+    {
+        try {
+
+            $data = Driver::index($request)->get();
+
+            return $this->responseApiSuccess(DriverResource::collection($data)->response()->getData());
+        } catch (\Exception $error) {
+            return $this->responseApiError(__('Có lỗi xảy ra! Vui lòng thử lại sau.'), $error->getMessage());
+        }
+    }
+
+    public function destroyMedia(Request $request, Driver $driver, $id)
+    {
+        try {
+            $media = $driver->getMedia("*")->where('uuid', $id)->first();
+
+            if (!$media) {
+                return $this->responseApiError(__('media not found.'));
+            }
+
+            $media->delete();
+
+            return $this->responseApiSuccess($media);
         } catch (\Exception $error) {
             return $this->responseApiError(__('Có lỗi xảy ra! Vui lòng thử lại sau.'), $error->getMessage());
         }

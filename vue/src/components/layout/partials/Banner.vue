@@ -1,6 +1,6 @@
 <template>
     <div class="banner">
-        <a href="/dashboard" class="logo"><img src="logo.png"></a>
+        <a href="/dashboard" class="logo"><img src="/logo.png"></a>
         <h1><a href="/dashboard" style="color:#fff">Phần mềm <span style="color:yellow">LogisViet</span></a><span class="slog">Hệ thống điều hành vận tải - Logistics</span></h1>
         <ul class="topplugin">
             <li><a href="./suco" title="Thông báo sự cố"><i class="fa fa-exclamation-triangle"></i> Sự cố <span class="red bold">(0)</span></a></li>

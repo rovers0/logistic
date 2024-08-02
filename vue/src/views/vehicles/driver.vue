@@ -51,12 +51,12 @@
                         <td>{{ driver.commission_percent }}</td>
                         <td align="center">
                             <a href="javascript:void(0)" title="Chi tiết" @click="approve(driver.id)">
-                                <img src="images/icons/check-1.png">
+                                <img src="/images/icons/check-1.png">
                             </a>
                         </td>
                         <td align="center">
                             <a href="javascript:void(0)" title="Chỉnh sửa" @click="openDriverInfor(driver, true)">
-                                <img src="images/icons/edit-1.png" class="e_MV9fX19fMDk3NTUxMjI4Mg">
+                                <img src="/images/icons/edit-1.png" class="e_MV9fX19fMDk3NTUxMjI4Mg">
                             </a>
                         </td>
                     </tr>

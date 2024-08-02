@@ -17,6 +17,9 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             SettingSeeder::class,
             PackingSeeder::class,
+            CustomerSeeder::class,
+            CarrierSeeder::class,
+            FeesSeeder::class,
         ]);
     }
 }

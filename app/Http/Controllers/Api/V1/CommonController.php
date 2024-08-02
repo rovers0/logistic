@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Setting;
 use App\Models\User;
+use App\Models\Fees;
 
 class CommonController extends Controller
 {
@@ -19,5 +20,12 @@ class CommonController extends Controller
         $setting->save();
 
         return $this->responseApiSuccess(['setting' => $setting->value]);
+    }
+
+    public function getFees()
+    {
+        $fees = Fees::all();
+
+        return $this->responseApiSuccess($fees);
     }
 }

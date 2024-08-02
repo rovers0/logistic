@@ -3213,6 +3213,15 @@ function previewImg(e, t) {
         for ($(".view_pics").html(""), i = 0; i < a.length; i++) - 1 === o.indexOf(a[i].name) && ($(".view_pics").append('<img src="" id="' + i + '">'), $(".view_pics img:eq(" + i + ")").attr("src", URL.createObjectURL(e.target.files[i])))
 }
 
+function previewFeeImg(e, t) {
+    var id = `img_file_${t}`,
+        a = document.getElementById(id).files,
+        o = [];
+    if ($(".view_pics_"+t).fadeIn(), a.length > 2) alert("Bạn chỉ được chọn tối đa 2 hình ảnh ('png', 'jpeg', 'jpg')"), $("#img_file").val(""), $(".view_pics").html("");
+    else
+        for ($(".view_pics_"+t).html(""), i = 0; i < a.length; i++) - 1 === o.indexOf(a[i].name) && ($(".view_pics_"+t).append('<img src="" id="' + i + '" style="width: 60px;">'), $(".view_pics_"+ t +" img:eq(" + i + ")").attr("src", URL.createObjectURL(e.target.files[i])))
+}
+
 function previewImg2(e, t) {
     document.getElementById("img_file_" + t).files;
     var n = document.getElementById("view_pics_" + t),

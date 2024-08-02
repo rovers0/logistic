@@ -158,7 +158,7 @@
                             <td colspan="2">
                                 <h3>Hình ảnh đính kèm</h3>
                                 <ul class="picslist">
-                                    <VueLightbox :imgs="urls"></VueLightbox>
+                                    <VueLightbox :imgs="driverInfor.addable_files" @delete="handleDeleteFile"></VueLightbox>
                                 </ul>
                             </td>
                         </tr>
@@ -175,6 +175,7 @@
                 <p>Màn hình chỉnh sửa thông tin tài xế</p>
             </div>
             <div class="frm">
+                <p class="red" v-if="error.msg" style="text-align: center; margin: 5px 0;">{{ error.msg }}</p>
                 <table class="table">
                     <tbody>
                         <tr>
@@ -183,6 +184,7 @@
                             </td>
                             <td>
                                 <input type="text" v-model="user.name" def placeholder="Họ và tên" maxlength="50" required="required">
+                                <p class="red" v-if="error.name">{{ error.name[0] }}</p>
                             </td>
                         </tr>
                         <tr>
@@ -193,6 +195,7 @@
                                 <select v-model="vehicle">
                                     <option v-for="item in master.vehicle" v-if="master?.vehicle" :key="item.id" :value="item.id">{{ item.plate }}</option>
                                 </select>
+                                <p class="red" v-if="error.vehicles">{{ error.vehicles[0] }}</p>
                             </td>
                         </tr>
                         <tr>
@@ -201,6 +204,7 @@
                             </td>
                             <td>
                                 <input type="tel" v-model="user.phone" placeholder="Số điện thoại" maxlength="10" required="required">
+                                <p class="red" v-if="error.phone">{{ error.phone[0] }}</p>
                             </td>
                         </tr>
                         <tr>
@@ -209,6 +213,7 @@
                             </td>
                             <td>
                                 <input type="text" v-model="user.email" placeholder="Email (nếu có)" maxlength="50">
+                                <p class="red" v-if="error.email">{{ error.email[0] }}</p>
                             </td>
                         </tr>
                         <tr>
@@ -217,6 +222,7 @@
                             </td>
                             <td>
                                 <Datepicker v-model="driverInfor.birthday" class="picker hasDatepicker"></Datepicker>
+                                <p class="red" v-if="error.birthday">{{ error.birthday[0] }}</p>
                             </td>
                         </tr>
                         <tr>
@@ -225,6 +231,7 @@
                             </td>
                             <td>
                                 <input type="text" v-model="driverInfor.bith_place" placeholder="Quê quán.VD: Tiền Giang" maxlength="100">
+                                <p class="red" v-if="error.bith_place">{{ error.bith_place[0] }}</p>
                             </td>
                         </tr>
                         <tr>
@@ -233,6 +240,7 @@
                             </td>
                             <td>
                                 <input type="text" v-model="driverInfor.passport" placeholder="Số CMND/CCCD/Passport" maxlength="30" required="">
+                                <p class="red" v-if="error.passport">{{ error.passport[0] }}</p>
                             </td>
                         </tr>
                         <tr>
@@ -241,6 +249,7 @@
                             </td>
                             <td>
                                 <input type="tel" v-model="driverInfor.relative_phone" placeholder="SĐT người thân" maxlength="10" onkeypress="return checkIt(event)">
+                                <p class="red" v-if="error.relative_phone">{{ error.relative_phone[0] }}</p>
                             </td>
                         </tr>
                         <tr>
@@ -249,6 +258,7 @@
                             </td>
                             <td>
                                 <input type="text" v-model="driverInfor.relative_name" placeholder="Tên người thân" maxlength="50">
+                                <p class="red" v-if="error.relative_name">{{ error.relative_name[0] }}</p>
                             </td>
                         </tr>
                         <tr>
@@ -257,6 +267,7 @@
                             </td>
                             <td>
                                 <input type="text" v-model="driverInfor.salary" data-type="currency" placeholder="VD: 4,500,000" maxlength="30" required="">
+                                <p class="red" v-if="error.salary">{{ error.salary[0] }}</p>
                             </td>
                         </tr>
                         <tr>
@@ -265,6 +276,7 @@
                             </td>
                             <td>
                                 <input type="text" v-model="driverInfor.allowance" data-type="currency" placeholder="Phụ cấp. VD: 500,000" maxlength="30">
+                                <p class="red" v-if="error.allowance">{{ error.allowance[0] }}</p>
                             </td>
                         </tr>
                         <tr>
@@ -273,6 +285,7 @@
                             </td>
                             <td>
                                 <input type="text" v-model="driverInfor.insurance" data-type="currency" placeholder="VD: 800,000" maxlength="30">
+                                <p class="red" v-if="error.insurance">{{ error.insurance[0] }}</p>
                             </td>
                         </tr>
                         <tr>
@@ -281,7 +294,7 @@
                             </td>
                             <td>
                                 <input type="text" v-model="driverInfor.commission_percent" value="0" placeholder="VD: 1.5" maxlength="3">
-                                <p class="tips blue2 italic">(Nếu áp dụng, mức hoa hồng sẽ được tính theo sản lượng tài xế đạt được trong tháng. Trường hợp không áp dụng nhập 0)</p>
+                                <p class="red" v-if="error.commission_percent">{{ error.commission_percent[0] }}</p><p v-else class="tips blue2 italic">(Nếu áp dụng, mức hoa hồng sẽ được tính theo sản lượng tài xế đạt được trong tháng. Trường hợp không áp dụng nhập 0)</p>
                             </td>
                         </tr>
                         <tr>
@@ -289,7 +302,8 @@
                                 <b>Số năm kinh nghiệm</b>
                             </td>
                             <td>
-                                <input type="text" v-model="driverInfor.experient_year" placeholder="Số năm kinh nghiệm. VD: 5" onkeypress="return checkIt(event)" maxlength="2">
+                                <input type="number" v-model="driverInfor.experient_year" placeholder="Số năm kinh nghiệm. VD: 5" onkeypress="return checkIt(event)" maxlength="2">
+                                <p class="red" v-if="error.experient_year">{{ error.experient_year[0] }}</p>
                             </td>
                         </tr>
                         <tr>
@@ -298,6 +312,7 @@
                             </td>
                             <td>
                                 <input type="text" v-model="driverInfor.license_class" placeholder="Hạng bằng lái" maxlength="50" required="">
+                                <p class="red" v-if="error.license_class">{{ error.license_class[0] }}</p>
                             </td>
                         </tr>
                         <tr>
@@ -306,6 +321,7 @@
                             </td>
                             <td>
                                 <input type="text" v-model="driverInfor.license" placeholder="Số bằng lái" maxlength="50" required="">
+                                <p class="red" v-if="error.license">{{ error.license[0] }}</p>
                             </td>
                         </tr>
                         <tr>
@@ -314,6 +330,7 @@
                             </td>
                             <td>
                                 <Datepicker v-model="driverInfor.license_expired_date" class="picker hasDatepicker"></Datepicker>
+                                <p class="red" v-if="error.license_expired_date">{{ error.license_expired_date[0] }}</p>
                             </td>
                         </tr>
                         <tr>
@@ -322,7 +339,7 @@
                             </td>
                             <td>
                                 <Datepicker v-model="driverInfor.save_date" class="picker hasDatepicker"></Datepicker>
-                                <p class="tips blue2 italic">(Thời hạn an toàn của tài xế nếu có)</p>
+                                <p class="red" v-if="error.save_date">{{ error.save_date[0] }}</p><p v-else class="tips blue2 italic">(Thời hạn an toàn của tài xế nếu có)</p>
                             </td>
                         </tr>
                         <tr>
@@ -336,6 +353,7 @@
                             </td>
                             <td>
                                 <input type="text" v-model="driverInfor.receive_user_id" placeholder="Người nhận hồ sơ" maxlength="50">
+                                <p class="red" v-if="error.receive_user_id">{{ error.receive_user_id[0] }}</p>
                             </td>
                         </tr>
                         <tr>
@@ -344,6 +362,7 @@
                             </td>
                             <td>
                                 <Datepicker v-model="driverInfor.receive_date" class="picker hasDatepicker"></Datepicker>
+                                <p class="red" v-if="error.receive_date">{{ error.receive_date[0] }}</p>
                             </td>
                         </tr>
                         <tr>
@@ -352,6 +371,7 @@
                             </td>
                             <td>
                                 <Datepicker v-model="driverInfor.start_date" class="picker hasDatepicker"></Datepicker>
+                                <p class="red" v-if="error.start_date">{{ error.start_date[0] }}</p>
                             </td>
                         </tr>
                         <tr>
@@ -360,6 +380,7 @@
                             </td>
                             <td>
                                 <Datepicker v-model="driverInfor.end_date" class="picker hasDatepicker"></Datepicker>
+                                <p class="red" v-if="error.end_date">{{ error.end_date[0] }}</p>
                             </td>
                         </tr>
                         <tr>
@@ -368,6 +389,7 @@
                             </td>
                             <td>
                                 <Datepicker v-model="driverInfor.release_date" class="picker hasDatepicker"></Datepicker>
+                                <p class="red" v-if="error.release_date">{{ error.release_date[0] }}</p>
                             </td>
                         </tr>
                         <tr>
@@ -377,7 +399,7 @@
                             <td>
                                 <p style="margin:0 0 10px 0">
                                     <input type="file" v-on:change="handleFileChange('cv_root_file', $event)" id="pdf_file" multiple="multiple" accept=".pdf,.doc,.docx,.xls,.xlsx">
-                                    <span class="red">File scan: .pdf,.doc,.docx,.xls,.xlsx</span>
+                                    <p class="red" v-if="error.cv_root_file">{{ error.cv_root_file[0] }}</p><span v-else class="red">File scan: .pdf,.doc,.docx,.xls,.xlsx</span>
                                 </p>
                             </td>
                         </tr>
@@ -387,7 +409,7 @@
                             </td>
                             <td>
                                 <input type="file" v-on:change="handleFileChange('image', $event)" id="img_file" onchange="previewImg(event,8);" multiple="multiple" accept="image/*;capture=camera">
-                                <p class="tips red">Lưu ý: có thể chọn cùng lúc tối thiểu 8 hình ảnh</p>
+                                <p class="red" v-if="error.image">{{ error.image[0] }}</p><p v-else class="tips red">Lưu ý: có thể chọn cùng lúc tối thiểu 8 hình ảnh</p>
                                 <div class="view_pics"></div>
                             </td>
                         </tr>
@@ -395,7 +417,7 @@
                             <td colspan="2">
                                 <h3>Hình ảnh đính kèm</h3>
                                 <ul class="picslist">
-                                    <VueLightbox :imgs="urls"></VueLightbox>
+                                    <VueLightbox :imgs="driverInfor.addable_files" @delete="handleDeleteFile"></VueLightbox>
                                 </ul>
                             </td>
                         </tr>
@@ -415,6 +437,7 @@
                                         <i class="fa fa-eye"></i>
                                     </span>
                                 </div>
+                                <p class="red" v-if="error.password">{{ error.password[0] }}</p>
                             </td>
                         </tr>
                     </tbody>
@@ -428,8 +451,7 @@
 
 </style>
 <script setup>
-import {dispalyPlate, daysUsable} from '@/helper.js';
-import { mapState, mapActions, mapMutations } from "vuex";
+import {dispalyPlate, daysUsable, formatBeforeRequest} from '@/helper.js';
 import VueLightbox from "@/components/VueLightbox.vue";
 </script>
 <script>
@@ -438,6 +460,7 @@ export default {
     emits: ['close'],
     data: function () {
         return {
+            error: {},
             user: {
                 name: this.driverInfor.user.name,
                 phone: this.driverInfor.user.phone,
@@ -445,7 +468,7 @@ export default {
             },
             cv_root_file: [],
             image: [],
-            urls: Object.values(this.driverInfor.addable_files).map(item => item.original_url),
+            // urls: Object.values(this.driverInfor.addable_files).map(item => item.original_url),
             vehicle: this.driverInfor.vehicle[0]?.id,
             reload: false,
         }
@@ -459,6 +482,19 @@ export default {
         handleFileChange(type, event) {
             this[type] = event.target.files;
         },
+        handleDeleteFile(id) {
+            if (confirm("Bạn có chắc muốn xóa file này") == true) {
+                this.$store.dispatch('deleteDriverMedia', {id: this.driverInfor.id, mediaId: id}).then((res) => {
+                if (res.data.success) {
+                    if (this.driverInfor.addable_files.hasOwnProperty(id)) {
+                        delete this.driverInfor.addable_files[id];
+                    }
+                } else {
+                    alert('Có lỗi xảy ra! Vui lòng thử lại sau.')
+                }
+            });
+            }
+        },
         updateData: function () {
             const payload = {
                 ...this.driverInfor,
@@ -467,17 +503,30 @@ export default {
             const { user, addable_files, vehicle, cv_root_file, ...newData } = payload;
 
             const formData = new FormData();
-            Object.entries(newData).forEach(([key, value]) => formData.append(key, value));
+            const newpayload = formatBeforeRequest(newData);
+            Object.entries(newpayload).forEach(([key, value]) => {
+                if (value) {
+                    formData.append(key, value)
+                }
+            });
             for (const file of this.cv_root_file) {
-                formData.append('cv_root_file[]', file); // Use an array name for multiple files
+                formData.append('cv_root_file[]', file);
             }
             for (const file of this.image) {
-                formData.append('addable_files[]', file); // Use an array name for multiple files
+                formData.append('addable_files[]', file);
             }
-            formData.append('vehicles[]', this.vehicle);
+            if (this.vehicle) {
+                formData.append('vehicles[]', this.vehicle);
+            }
+            
             this.$store.dispatch('updateDriver', {id: this.driverInfor.id, data: formData}).then((res) => {
                 if (res.data.success) {
                     this.$emit('close', true)
+                } else if (res.data.code == 422) {
+                    this.error = res.data.errors
+                } else {
+                    this.error = {}
+                    this.error.msg = res.data.message
                 }
             });
         }

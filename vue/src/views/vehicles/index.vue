@@ -7,7 +7,7 @@
     </span> xe </p>
     <div class="tools">
         <button @click="openModal('openVehicleAddModal')"><i class="fa fa-plus"></i> Thêm xe </button>
-        <button><i class="fa fa-file-excel-o"></i> Nhập file Excel </button>
+        <button style="opacity: 0.7;"><i class="fa fa-file-excel-o"></i> Nhập file Excel </button>
         <input type="text" v-model="search.plate" @click="openModal('openSelectLicensePlatesModal')" id="biensoxe" style="width:90px" placeholder="Biển số xe" maxlength="15" autocomplete="off" readonly>
         <select name="baixe" v-model="search.parkingLot">
             <option :value="null">Bãi xe</option>
@@ -57,39 +57,39 @@
                     <td>Nguyễn Văn Hậu</td>
                     <td>{{ vehicle.type != 0 ? 'Xe cổ đông' : 'Xe nhà' }}</td>
                     <td>
-                        <span class="red" v-if="vehicle.Inspection">Còn -11 (ngày)</span>
+                        <span class="red" v-if="vehicle.inspection"><span v-html="daysUsable(vehicle.inspection.expiration_date)"></span></span>
                         <span v-else>Chưa có</span>
-                        <a href="javascript:void(0)" style="float:right" @click="openModal('openVehicleInspectionModal', vehicle.Inspection)" title="Xem">
+                        <a href="javascript:void(0)" style="float:right" @click="openDocumentModal('vehicleInspection', vehicle.inspection, vehicle.id)" title="Xem">
                             <i class="fa fa-eye"></i> Xem </a>
                     </td>
                     <td>
-                        <span class="red" v-if="vehicle.RoadMaintenance">Còn -11 (ngày)</span>
+                        <span class="red" v-if="vehicle.roadMaintenance"><span v-html="daysUsable(vehicle.roadMaintenance.expiration_date)"></span></span>
                         <span v-else>Chưa có</span>
-                        <a href="javascript:void(0)" style="float:right" @click="openModal('openRoadMaintenanceModal', vehicle.RoadMaintenance)" title="Xem">
+                        <a href="javascript:void(0)" style="float:right" @click="openDocumentModal('roadMaintenance', vehicle.roadMaintenance, vehicle.id)" title="Xem">
                             <i class="fa fa-eye"></i> Xem </a>
                     </td>
                     <td>
-                        <span class="red" v-if="vehicle.VoluntaryInsurance">Còn -11 (ngày)</span>
+                        <span class="red" v-if="vehicle.voluntaryInsurance"><span v-html="daysUsable(vehicle.voluntaryInsurance.expiration_date)"></span></span>
                         <span v-else>Chưa có</span>
-                        <a href="javascript:void(0)" style="float:right" @click="openModal('openVoluntaryInsuranceModal', vehicle.VoluntaryInsurance)" title="Xem">
+                        <a href="javascript:void(0)" style="float:right" @click="openDocumentModal('voluntaryInsurance', vehicle.voluntaryInsurance, vehicle.id)" title="Xem">
                             <i class="fa fa-eye"></i> Xem </a>
                     </td>
                     <td>
-                        <span class="red" v-if="vehicle.MandatoryInsurance">Còn -11 (ngày)</span>
+                        <span class="red" v-if="vehicle.mandatoryInsurance"><span v-html="daysUsable(vehicle.mandatoryInsurance.expiration_date)"></span></span>
                         <span v-else>Chưa có</span>
-                        <a href="javascript:void(0)" style="float:right" @click="openModal('openMandatoryInsuranceModal', vehicle.MandatoryInsurance)" title="Xem">
+                        <a href="javascript:void(0)" style="float:right" @click="openDocumentModal('mandatoryInsurance', vehicle.mandatoryInsurance, vehicle.id)" title="Xem">
                             <i class="fa fa-eye"></i> Xem </a>
                     </td>
                     <td>
-                        <span class="red" v-if="vehicle.RoadPermit">Còn -11 (ngày)</span>
+                        <span class="red" v-if="vehicle.roadPermit"><span v-html="daysUsable(vehicle.roadPermit.expiration_date)"></span></span>
                         <span v-else>Chưa có</span>
-                        <a href="javascript:void(0)" style="float:right" @click="openModal('openRoadPermitModal', vehicle.RoadPermit)" title="Xem">
+                        <a href="javascript:void(0)" style="float:right" @click="openDocumentModal('roadPermit', vehicle.roadPermit, vehicle.id)" title="Xem">
                             <i class="fa fa-eye"></i> Xem </a>
                     </td>
                     <td>Bãi xe {{ vehicle.parking_lot }}</td>
                     <td align="center">
                         <a href="javascript:void(0)" title="Chỉnh sửa" @click="openModal('openVehicleEditModal', vehicle)">
-                            <img src="images/icons/edit-1.png" class="e_MV9fX19fMTVDMTc2Njk" />
+                            <img src="/images/icons/edit-1.png" class="e_MV9fX19fMTVDMTc2Njk" />
                         </a>
                     </td>
                 </tr>
@@ -103,31 +103,41 @@
         :data="this.modalData.openVehicleDetailModal"
         @close="onCloseDetailModal('openVehicleDetailModal')"
     ></VehicleDetailModal>
-    <VehicleInspectionModal
-        v-if="openVehicleInspectionModal"
-        :data="this.modalData.openVehicleInspectionModal"
-        @close="onCloseDetailModal('openVehicleInspectionModal')"
-    ></VehicleInspectionModal>
-    <RoadMaintenanceModal
-        v-if="openRoadMaintenanceModal"
-        :data="this.modalData.openRoadMaintenanceModal"
-        @close="onCloseDetailModal('openRoadMaintenanceModal')"
-    ></RoadMaintenanceModal>
-    <VoluntaryInsuranceModal
-        v-if="openVoluntaryInsuranceModal"
-        :data="this.modalData.openVoluntaryInsuranceModal"
-        @close="onCloseDetailModal('openVoluntaryInsuranceModal')"
-    ></VoluntaryInsuranceModal>
-    <MandatoryInsuranceModal
-        v-if="openMandatoryInsuranceModal"
-        :data="this.modalData.openMandatoryInsuranceModal"
-        @close="onCloseDetailModal('openMandatoryInsuranceModal')"
-    ></MandatoryInsuranceModal>
-    <RoadPermitModal
-        v-if="openRoadPermitModal"
-        :data="this.modalData.openRoadPermitModal"
-        @close="onCloseDetailModal('openRoadPermitModal')"
-    ></RoadPermitModal>
+    <VehicleDocumentModal
+        v-if="vehicleInspection"
+        :modalType="'vehicleInspection'"
+        :data="this.modalData.vehicleInspection"
+        :vehicleID="this.modalData.id"
+        @close="onCloseDocument"
+    ></VehicleDocumentModal>
+    <VehicleDocumentModal
+        v-if="roadMaintenance"
+        :modalType="'roadMaintenance'"
+        :data="this.modalData.roadMaintenance"
+        :vehicleID="this.modalData.id"
+        @close="onCloseDocument"
+    ></VehicleDocumentModal>
+    <VehicleDocumentModal
+        v-if="voluntaryInsurance"
+        :modalType="'voluntaryInsurance'"
+        :vehicleID="this.modalData.id"
+        :data="this.modalData.voluntaryInsurance"
+        @close="onCloseDocument"
+    ></VehicleDocumentModal>
+    <VehicleDocumentModal
+        v-if="mandatoryInsurance"
+        :modalType="'mandatoryInsurance'"
+        :data="this.modalData.mandatoryInsurance"
+        :vehicleID="this.modalData.id"
+        @close="onCloseDocument"
+    ></VehicleDocumentModal>
+    <VehicleDocumentModal
+        v-if="roadPermit"
+        :modalType="'roadPermit'"
+        :data="this.modalData.roadPermit"
+        :vehicleID="this.modalData.id"
+        @close="onCloseDocument"
+    ></VehicleDocumentModal>
     <VehicleEditModal
         v-if="openVehicleEditModal"
         :vehicleInfor="this.modalData.openVehicleEditModal"
@@ -142,7 +152,7 @@
     <SelectLicensePlatesModal
         v-if="openSelectLicensePlatesModal"
         :data="this.master.plate"
-        :onSubmit="setPlateSearch"
+        @onSubmit="setPlateSearch"
         @close="onCloseDetailModal('openSelectLicensePlatesModal')"
     ></SelectLicensePlatesModal>
 </template>
@@ -151,31 +161,34 @@
 <script setup>
 import moment from 'moment';
 import VehicleDetailModal from './modal/VehicleDetailModal.vue';
-import VehicleInspectionModal from './modal/VehicleInspectionModal.vue';
-import RoadMaintenanceModal from './modal/RoadMaintenanceModal.vue';
-import VoluntaryInsuranceModal from './modal/VoluntaryInsuranceModal.vue';
-import MandatoryInsuranceModal from './modal/MandatoryInsuranceModal.vue';
-import RoadPermitModal from './modal/RoadPermitModal.vue';
+import VehicleDocumentModal from './modal/VehicleDocumentModal.vue';
 import VehicleEditModal from './modal/VehicleEditModal.vue';
 import VehicleAddModal from './modal/VehicleAddModal.vue';
-import SelectLicensePlatesModal from './modal/SelectLicensePlatesModal.vue';
+import SelectLicensePlatesModal from '@/components/SelectLicensePlatesModal.vue';
+import { daysUsable } from '@/helper.js';
 </script>
 <script>
 export default {
     data: function () {
         return {
             openVehicleDetailModal: false,
-            openVehicleInspectionModal: false,
-            openRoadMaintenanceModal: false,
-            openVoluntaryInsuranceModal: false,
-            openMandatoryInsuranceModal: false,
-            openRoadPermitModal: false,
+            vehicleInspection: false,
+            roadMaintenance: false,
+            voluntaryInsurance: false,
+            mandatoryInsurance: false,
+            roadPermit: false,
             openVehicleEditModal: false,
             openVehicleAddModal: false,
             openSelectLicensePlatesModal: false,
             search: {...this.$store.state.vehicle.search},
             total: 0,
-            modalData: {},
+            modalData: {
+                vehicleInspection: null,
+                roadMaintenance: null,
+                voluntaryInsurance: null,
+                mandatoryInsurance: null,
+                roadPermit: null,
+            },
             selected_key: null,
             master: [],
             vehicles: []
@@ -190,9 +203,15 @@ export default {
             this.modalData.openVehicleDetailModal = data;
             this.openVehicleDetailModal = true
         },
-        openModal: function (type, data = {}) {
+        openModal: function (type, data = null, vehicleID = null) {
             this[type] = true;
             this.modalData[type]  = data;
+            this.modalData.id  = vehicleID;
+        },
+        openDocumentModal: function (type, data = null, vehicleID = null) {
+            this[type] = true;
+            this.modalData[type]  = data;
+            this.modalData.id  = vehicleID;
         },
         onCloseDetailModal: function (type) {
             this[type] = false
@@ -210,6 +229,14 @@ export default {
                 this.getData();
             }
         },
+        onCloseDocument: function (event) {
+            if(event && event.modal) {
+                this[event.modal] = false
+            }
+            if(event && event.reload) {
+                this.getData();
+            }
+        },
         getData: function () {
             this.vehicles = [];
             let payload = this.search;
@@ -224,6 +251,7 @@ export default {
             });
         },
         setPlateSearch: function (value) {
+            console.log(value)
             this.search.plate = value;
         },
         resetSearch: function () {

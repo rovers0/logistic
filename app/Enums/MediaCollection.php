@@ -12,4 +12,6 @@ enum MediaCollection: string
     case EXPORT = 'exports';
     case IMPORT = 'imports';
     case CV_ROOT = 'cv-roots';
+    case COMMAND_MOBILE_IMAGES = 'command-mobile';
+    case COMMAND_MOBILE_INCURRED_IMAGES = 'command-mobile-incurred';
 }

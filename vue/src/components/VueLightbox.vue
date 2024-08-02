@@ -1,9 +1,9 @@
 <template>
   <div>
-    <li v-for="(item, i) in imgs" :key="i">
-        <span><i class="fa fa-trash"></i> Xóa </span>
-        <span class="colorbox cboxElement" style="cursor:zoom-in" @click="showMultiple(i)">
-            <img :src=item>
+    <li v-for="(item, key, index) in imgs" :key="key">
+        <span @click="onDelete(key)" v-if="!hideDelete"><i class="fa fa-trash"></i> Xóa </span>
+        <span class="colorbox cboxElement" style="cursor:zoom-in" @click="showMultiple(index)">
+            <img :src=item.original_url>
         </span>
     </li>
     <vue-easy-lightbox
@@ -20,8 +20,8 @@ import VueEasyLightbox from "vue-easy-lightbox";
 import { defineComponent } from "vue";
 export default defineComponent({
     components: { VueEasyLightbox },
-    props: ['imgs', 'isEdit', 'driverInfor'],
-    emits: ['close'],
+    props: ['imgs', 'isEdit', 'driverInfor', 'hideDelete'],
+    emits: ['delete'],
     data: function () {
         return {
             visibleRef: false,
@@ -40,11 +40,14 @@ export default defineComponent({
             this.onShow();
         },
         showMultiple: function (index) {
-            this.imgsRef = this.imgs;
+            this.imgsRef = Object.values(this.imgs).map(item => item.original_url);
             this.indexRef = index || 0;
             this.onShow();
         },
-        onHide: function () {this.visibleRef = false}
+        onHide: function () {this.visibleRef = false},
+        onDelete: function (id) {
+          this.$emit('delete', id)
+        }
     },
 })
 </script>

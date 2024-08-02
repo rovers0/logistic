@@ -114,7 +114,7 @@
                 </table>
             </div>
             <div class="frm">
-                <input type="hidden" name="code" value="NF9fX19fMTVSMTI3MzY">
+                <p class="red" v-if="error.msg" style="text-align: center; margin: 5px 0;">{{ error.msg }}</p>
                 <table class="table">
                     <tbody>
                         <tr>
@@ -123,6 +123,7 @@
                             </td>
                             <td>
                                 <input type="text" v-model="vehicleInfor.serial" placeholder="Nhập số sơ mi rơ mooc" maxlength="30" required="required">
+                                <p class="red" v-if="error.serial">{{ error.serial[0] }}</p>
                             </td>
                         </tr>
                         <tr>
@@ -131,6 +132,7 @@
                             </td>
                             <td>
                                 <input type="text" v-model="vehicleInfor.frame_number" placeholder="Nhập số khung" maxlength="100">
+                                <p class="red" v-if="error.frame_number">{{ error.frame_number[0] }}</p>
                             </td>
                         </tr>
                         <tr>
@@ -144,6 +146,7 @@
                                     <option value="2">Bãi xe 2</option>
                                     <option value="3">Bãi xe 3</option>
                                 </select>
+                                <p class="red" v-if="error.packing_id">{{ error.packing_id[0] }}</p>
                             </td>
                         </tr>
                         <tr>
@@ -152,6 +155,7 @@
                             </td>
                             <td>
                                 <input type="text" v-model="vehicleInfor.weight" placeholder="Nhập số KG. VD:30,000" maxlength="7" required="">
+                                <p class="red" v-if="error.weight">{{ error.weight[0] }}</p>
                             </td>
                         </tr>
                         <tr>
@@ -164,6 +168,7 @@
                                     <option value="0">Mooc 20</option>
                                     <option value="1">Mooc 40</option>
                                 </select>
+                                <p class="red" v-if="error.size">{{ error.size[0] }}</p>
                             </td>
                         </tr>
                         <tr>
@@ -176,6 +181,7 @@
                                     <option value="0">Mooc sàn</option>
                                     <option value="1">Mooc sương</option>
                                 </select>
+                                <p class="red" v-if="error.type">{{ error.type[0] }}</p>
                             </td>
                         </tr>
                         <tr>
@@ -188,6 +194,7 @@
                                     <option value="0">2 trục</option>
                                     <option value="1">3 trục</option>
                                 </select>
+                                <p class="red" v-if="error.axis">{{ error.axis[0] }}</p>
                             </td>
                         </tr>
                         <tr>
@@ -196,6 +203,7 @@
                             </td>
                             <td>
                                 <textarea name="ds[ghichu]" v-model="vehicleInfor.note" placeholder="Ghi chú thông tin trang thiết bị (nếu có)..." maxlength="500"></textarea>
+                                <p class="red" v-if="error.note">{{ error.note[0] }}</p>
                             </td>
                         </tr>
                         <tr>
@@ -206,7 +214,7 @@
                                 <p style="margin:10px 0 0 0;float:left;clear:both;width:100%">
                                     <input type="file" v-on:change="handleFileChange('images', $event)" onchange="previewImg(event,8);" id="img_file" multiple="multiple" accept="image/*">
                                 </p>
-                                <p class="red" style="padding:5px 0 0 0">Lưu ý: có thể chọn cùng lúc tối thiểu 20 hình ảnh mỗi lượt thêm (&lt;=10MB)</p>
+                                <p class="red" v-if="error.images">{{ error.images[0] }}</p><p v-elseclass="red" style="padding:5px 0 0 0">Lưu ý: có thể chọn cùng lúc tối thiểu 8 hình ảnh mỗi lượt thêm (&lt;=10MB)</p>
                                 <div class="view_pics"></div>
                             </td>
                         </tr>
@@ -216,14 +224,14 @@
                             </td>
                             <td>
                                 <input type="file" v-on:change="handleFileChange('addable_files', $event)" accept=".pdf,.doc,.docx,.xls,.xlsx">
-                                <p style="padding:5px 0 0 0;color:red">File định dạng: .pdf,.doc,.docx,.xls,.xlsx (Được chọn cùng lúc nhiều file)</p>
+                                <p class="red" v-if="error.addable_files">{{ error.addable_files[0] }}</p><p style="padding:5px 0 0 0;color:red" v-else>File định dạng: .pdf,.doc,.docx,.xls,.xlsx (Được chọn cùng lúc nhiều file)</p>
                             </td>
                         </tr>
                         <tr>
                             <td colspan="2">
                                 <h3>Hình ảnh</h3>
                                 <ul class="picslist">
-                                    <VueLightbox :imgs="urls"></VueLightbox>
+                                    <VueLightbox :imgs="vehicleInfor.images" @delete="handleDeleteFile"></VueLightbox>
                                 </ul>
                             </td>
                         </tr>
@@ -339,7 +347,7 @@
                 </table>
             </div>
             <div class="frm">
-                <input type="hidden" name="code" value="NF9fX19fMTVIMDI5ODU">
+                <p class="red" v-if="error.msg" style="text-align: center; margin: 5px 0;">{{ error.msg }}</p>
                 <table class="table">
                     <tbody>
                         <tr>
@@ -348,6 +356,7 @@
                             </td>
                             <td>
                                 <input type="text" v-model="vehicleInfor.plate" placeholder="Nhập biển số xe" maxlength="15" required="required">
+                                <p class="red" v-if="error.plate">{{ error.plate[0] }}</p>
                             </td>
                         </tr>
                         <tr>
@@ -356,6 +365,7 @@
                             </td>
                             <td>
                                 <input type="text" v-model="vehicleInfor.chassis" placeholder="Nhập số khung" maxlength="100">
+                                <p class="red" v-if="error.chassis">{{ error.chassis[0] }}</p>
                             </td>
                         </tr>
                         <tr>
@@ -364,6 +374,7 @@
                             </td>
                             <td>
                                 <input type="text" v-model="vehicleInfor.seri" value="" placeholder="Nhập số máy" maxlength="100">
+                                <p class="red" v-if="error.seri">{{ error.seri[0] }}</p>
                             </td>
                         </tr>
                         <tr>
@@ -377,6 +388,7 @@
                                     <option value="2">Xe 2 cầu</option>
                                     <option value="0">Chưa xác định</option>
                                 </select>
+                                <p class="red" v-if="error.axle">{{ error.axle[0] }}</p>
                             </td>
                         </tr>
                         <tr>
@@ -390,6 +402,7 @@
                                     <option value="2">Bãi xe 2</option>
                                     <option value="3">Bãi xe 3</option>
                                 </select>
+                                <p class="red" v-if="error.parking_lot">{{ error.parking_lot[0] }}</p>
                             </td>
                         </tr>
                         <tr>
@@ -397,33 +410,19 @@
                                 <b>Cổ đông xe (*)</b>
                             </td>
                             <td>
-                                <select name="cd" class="select selectized" required="" tabindex="-1" style="display: none;">
-                                    <option value="MF9fX19fMF9fX19fWGUgbmjDoA" selected="selected">(0) Xe nhà</option>
+                                <select v-model="vehicleInfor.type">
+                                    <option value="0">(0) Xe nhà</option>
                                 </select>
-                                <div class="selectize-control select single plugin-remove_button">
-                                    <div class="selectize-input items required full has-options has-items">
-                                        <span vehicleInfor-value="MF9fX19fMF9fX19fWGUgbmjDoA">
-                                            <div class="item">(0) Xe nhà</div>
-                                            <a href="javascript:void(0)" class="remove-single" tabindex="-1" title="Remove">×</a>
-                                        </span>
-                                        <input type="select-one" autocomplete="off" tabindex="" style="width: 4px;">
-                                    </div>
-                                    <div class="selectize-dropdown single select plugin-remove_button" style="display: none; width: 1052.88px; top: 34px; left: 0px;">
-                                        <div class="selectize-dropdown-content"></div>
-                                    </div>
-                                </div>
-                                <p class="tips blue2 italic">(Chọn xe nhà hoặc xe từ cổ đông đầu tư)</p>
+                                <p class="red" v-if="error.type">{{ error.type[0] }}</p><p class="tips blue2 italic" v-else>(Chọn xe nhà hoặc xe từ cổ đông đầu tư)</p>
                             </td>
                         </tr>
-                        <!--
-            <tr><td><b>Tài xế phụ trách</b></td><td><select name="tx" class="select" placeholder="Chọn tài xế"><option value="">Chọn tài xế</option><option value="1_____Nguyễn Văn Hậu">Nguyễn Văn Hậu</option><option value="2_____Lại Ngọc Hoằng">Lại Ngọc Hoằng</option><option value="3_____Nguyễn Thế Hanh">Nguyễn Thế Hanh</option><option value="4_____Vũ Tuấn Trường">Vũ Tuấn Trường</option></select></td></tr>
-            -->
                         <tr>
                             <td>
                                 <b>Ghi chú</b>
                             </td>
                             <td>
                                 <textarea v-model="vehicleInfor.note" placeholder="Ghi chú thông tin trang thiết bị (nếu có)..." maxlength="500">Xe Trung Quốc / ChengLong</textarea>
+                                <p class="red" v-if="error.note">{{ error.note[0] }}</p>
                             </td>
                         </tr>
                         <tr>
@@ -434,7 +433,7 @@
                                 <p style="margin:10px 0 0 0;float:left;clear:both;width:100%">
                                     <input type="file" v-on:change="handleFileChange('images', $event)" id="img_file" onchange="previewImg(event,8);" multiple="multiple" accept="image/*">
                                 </p>
-                                <p class="red" style="padding:5px 0 0 0">Lưu ý: có thể chọn cùng lúc tối thiểu 8 hình ảnh mỗi lượt thêm (&lt;=10MB)</p>
+                                <p class="red" v-if="error.images">{{ error.images[0] }}</p><p v-elseclass="red" style="padding:5px 0 0 0">Lưu ý: có thể chọn cùng lúc tối thiểu 8 hình ảnh mỗi lượt thêm (&lt;=10MB)</p>
                                 <div class="view_pics"></div>
                             </td>
                         </tr>
@@ -444,14 +443,14 @@
                             </td>
                             <td>
                                 <input type="file" v-on:change="handleFileChange('addable_files', $event)" id="pdf_file" multiple="multiple" accept=".pdf,.doc,.docx,.xls,.xlsx">
-                                <p style="padding:5px 0 0 0;color:red">File định dạng: .pdf,.doc,.docx,.xls,.xlsx (Được chọn cùng lúc nhiều file)</p>
+                                <p class="red" v-if="error.addable_files">{{ error.addable_files[0] }}</p><p style="padding:5px 0 0 0;color:red" v-else>File định dạng: .pdf,.doc,.docx,.xls,.xlsx (Được chọn cùng lúc nhiều file)</p>
                             </td>
                         </tr>
                         <tr>
                             <td colspan="2">
                                 <h3>Hình ảnh</h3>
                                 <ul class="picslist">
-                                    <VueLightbox :imgs="urls"></VueLightbox>
+                                    <VueLightbox :imgs="vehicleInfor.images" @delete="handleDeleteFile"></VueLightbox>
                                 </ul>
                             </td>
                         </tr>
@@ -488,6 +487,7 @@ export default {
     emits: ['close'],
     data: function () {
         return {
+            error: {},
             images: [],
             addable_files: [],
             openTireInformationModal: false,
@@ -517,7 +517,11 @@ export default {
             const { user, addable_files, parking, images, ...newData } = payload;
 
             const formData = new FormData();
-            Object.entries(newData).forEach(([key, value]) => formData.append(key, value));
+            Object.entries(newData).forEach(([key, value]) => {
+                if (!(value == null)) {
+                    formData.append(key, value)
+                }
+            });
             for (const file of this.images) {
                 formData.append('images[]', file);
             }
@@ -527,8 +531,29 @@ export default {
             this.$store.dispatch( this.isMooc ? 'updateMooc' : 'updateVehicle', {id: this.vehicleInfor.id, data: formData}).then((res) => {
                 if (res.data.success) {
                     this.$emit('close', true)
+                } else if (res.data.code == 422) {
+                    this.error = res.data.errors
+                } else {
+                    this.error = {}
+                    this.error.msg = res.data.message
                 }
             });
+        },
+        handleDeleteFile(id) {
+            if (confirm("Bạn có chắc muốn xóa file này") == true) {
+                this.$store.dispatch(
+                    this.isMooc ? 'deleteMoocMedia' : 'deleteVehicleMedia', 
+                    {id: this.vehicleInfor.id, mediaId: id}
+                ).then((res) => {
+                if (res.data.success) {
+                    if (this.vehicleInfor.images.hasOwnProperty(id)) {
+                        delete this.vehicleInfor.images[id];
+                    }
+                } else {
+                    alert('Có lỗi xảy ra! Vui lòng thử lại sau.')
+                }
+            });
+            }
         },
         onClose: function () {
             this.$emit('close', this.reload)

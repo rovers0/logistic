@@ -5,7 +5,7 @@
             <div class="container-login100">
                 <div class="wrap-login100">
                     <div class="login100-form-title banner">
-                        <img src="logo.png" />
+                        <img src="/logo.png" />
                         <span class="login100-form-title-1">Phần mềm vận tải Logistics</span>
                         <div id="show_clock" class="cal_log"></div>
                     </div>

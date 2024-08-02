@@ -184,7 +184,7 @@
                             <td colspan="2">
                                 <h3>Hình ảnh</h3>
                                 <ul class="picslist">
-                                    <VueLightbox :imgs="urls"></VueLightbox>
+                                    <VueLightbox :imgs="data.images" @delete="handleDeleteFile"></VueLightbox>
                                 </ul>
                             </td>
                         </tr>
@@ -388,7 +388,7 @@
                         <td colspan="2">
                             <h3>Hình ảnh đính kèm</h3>
                             <ul class="picslist">
-                                <VueLightbox :imgs="urls"></VueLightbox>
+                                <VueLightbox :imgs="data.images" @delete="handleDeleteFile"></VueLightbox>
                             </ul>
                         </td>
                     </tr>
@@ -445,6 +445,22 @@ export default {
         },
         onClose: function () {
             this.$emit('close', this.reload)
+        },
+        handleDeleteFile(id) {
+            if (confirm("Bạn có chắc muốn xóa file này") == true) {
+                this.$store.dispatch(
+                    this.isMooc ? 'deleteMoocMedia' : 'deleteVehicleMedia', 
+                    {id: this.data.id, mediaId: id}
+                ).then((res) => {
+                if (res.data.success) {
+                    if (this.data.images.hasOwnProperty(id)) {
+                        delete this.data.images[id];
+                    }
+                } else {
+                    alert('Có lỗi xảy ra! Vui lòng thử lại sau.')
+                }
+            });
+            }
         },
     },
     created: async function () {
